@@ -11,38 +11,34 @@ spec:
     app: tkf-docker-registry
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
-      annotations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
       labels:
         app: tkf-docker-registry
     spec:
       containers:
-        - name: {{ .Chart.Name }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          ports:
-          - containerPort: 5000
-          volumeMounts:
-          - name: storage
-            mountPath: /var/lib/registry
-          - name: htpasswd
-            mountPath: /auth
-            readOnly: true
-          env:
-          - name: REGISTRY_AUTH
-            value: htpasswd
-          - name: REGISTRY_AUTH_HTPASSWD_REALM
-            value: Docker Registry
-          - name: REGISTRY_AUTH_HTPASSWD_PATH
-            value: /auth/htpasswd
-          - name: REGISTRY_STORAGE_DELETE_ENABLED
-            value: "true"
-        volumes:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+        - containerPort: 5000
+        volumeMounts:
         - name: storage
-          persistentVolumeClaim:
-            claimName: docker-registry-pvc
+          mountPath: /var/lib/registry
         - name: htpasswd
-          secret:
-            secretName: docker-registry-htpasswd
+          mountPath: /auth
+          readOnly: true
+        env:
+        - name: REGISTRY_AUTH
+          value: htpasswd
+        - name: REGISTRY_AUTH_HTPASSWD_REALM
+          value: "Docker Registry"
+        - name: REGISTRY_AUTH_HTPASSWD_PATH
+          value: /auth/htpasswd
+        - name: REGISTRY_STORAGE_DELETE_ENABLED
+          value: "true"
+      volumes:
+      - name: storage
+        persistentVolumeClaim:
+          claimName: docker-registry-pvc
+      - name: htpasswd
+        secret:
+          secretName: docker-registry-htpasswd
