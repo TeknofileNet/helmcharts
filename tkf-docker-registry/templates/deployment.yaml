@@ -3,14 +3,12 @@ kind: Deployment
 metadata:
   name: tkf-docker-registry
   labels:
-    {{- include "tkf-docker-registry.labels" . | nindent 4 }}
+  app: tkf-docker-registry
 spec:
-  {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
-  {{- end }}
   selector:
     matchLabels:
-      {{- include "tkf-docker-registry.selectorLabels" . | nindent 6 }}
+    app: tkf-docker-registry
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -18,7 +16,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "tkf-docker-registry.selectorLabels" . | nindent 8 }}
+        app: tkf-docker-registry
     spec:
       containers:
         - name: {{ .Chart.Name }}
