@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "tkf-docker-registry.fullname" . }}
+  name: tkf-docker-registry
   labels:
     {{- include "tkf-docker-registry.labels" . | nindent 4 }}
 spec:

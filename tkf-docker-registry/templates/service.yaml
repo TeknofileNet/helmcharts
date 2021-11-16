@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "tkf-docker-registry.fullname" . }}
+  name: tkf-docker-registry
   labels:
     {{- include "tkf-docker-registry.labels" . | nindent 4 }}
 spec:
