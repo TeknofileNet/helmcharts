@@ -8,7 +8,7 @@ spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-    app: tkf-docker-registry
+      app: tkf-docker-registry
   template:
     metadata:
       labels:
