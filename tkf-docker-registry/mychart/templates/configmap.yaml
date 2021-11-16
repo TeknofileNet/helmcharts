@@ -1,6 +1,0 @@
-apiVerson: v1
-kind: ConfigMap
-metadata:
-  name: mychart-configmap
-data:
-  myvalue: "Hello World"
