@@ -26,3 +26,7 @@ resources: {}
   # requests:
   #   cpu: 100m
   #   memory: 128Mi
+
+
+service:
+  port: 5000

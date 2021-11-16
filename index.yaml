@@ -3,7 +3,7 @@ entries:
   mychart:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2021-11-16T15:13:49.04436271-07:00"
+    created: "2021-11-16T15:37:32.982679794-07:00"
     description: A Helm chart for Kubernetes
     digest: 9a5118f454739bbff8b83b45181ac55bacbf23fb07f0e354248dc3b26ea6b25c
     name: mychart
@@ -14,9 +14,9 @@ entries:
   tkf-docker-registry:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2021-11-16T15:13:49.045346988-07:00"
+    created: "2021-11-16T15:37:32.984711209-07:00"
     description: This chart deploys a docker registry
-    digest: 3f84c467ac0527b3f47e47c8529f69e1cfb89e7a2059fb96e2d4fd8a2b9de317
+    digest: 2e355bbfab1abf2627962ddf0bb12c3d87575c2aeabd7316e08fdd706b8e625a
     name: tkf-docker-registry
     type: application
     urls:
@@ -24,7 +24,7 @@ entries:
     version: 0.1.1
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2021-11-16T15:13:49.044959331-07:00"
+    created: "2021-11-16T15:37:32.983911036-07:00"
     description: A Helm chart for Kubernetes
     digest: 6b54d5dc1f85e0ae6c26f1a61004fee12f92a520e9cac105818a0cf052c34931
     name: tkf-docker-registry
@@ -32,4 +32,4 @@ entries:
     urls:
     - tkf-docker-registry-0.1.0.tgz
     version: 0.1.0
-generated: "2021-11-16T15:13:49.044000139-07:00"
+generated: "2021-11-16T15:37:32.981996461-07:00"
