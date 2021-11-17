@@ -33,7 +33,7 @@ spec:
       {{- end }}
 {{- if .Values.securityContext.enabled }}
       securityContext:
-        fsgroup: {{ .Values.securityContext.fsGroup }}
+        runAsGroup: {{ .Values.securityContext.fsGroup }}
         runAsUser: {{ .Values.securityContext.runAsUser }}
 {{- end }}
       containers:
