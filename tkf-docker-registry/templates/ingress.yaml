@@ -9,7 +9,7 @@ spec:
   - match: Host(`{{ .Values.dnsName }}`)
     kind: Rule
     services:
-    - name: docker-registry-service
+    - name: tkf-docker-registry
       port: 5000
   tls:
     secretName: docker-svcs-teknofile-space-tls
