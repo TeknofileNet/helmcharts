@@ -32,3 +32,5 @@ resources: {}
 
 service:
   port: 5000
+
+dnsName: docker.svcs.teknofile.space
