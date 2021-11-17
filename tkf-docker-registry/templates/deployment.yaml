@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: tkf-docker-registry
+  name: {{ .Chart.Name }}
   labels:
-  app: tkf-docker-registry
+    app: {{ .Chart.Name }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: tkf-docker-registry
+      app: {{ .Chart.Name }}
   template:
     metadata:
       labels:
-        app: tkf-docker-registry
+        app: {{ .Chart.Name }}
     spec:
       containers:
       - name: {{ .Chart.Name }}
