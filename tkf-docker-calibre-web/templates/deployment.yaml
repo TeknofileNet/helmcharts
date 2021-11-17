@@ -1,61 +1,69 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "tkf-docker-calibre-web.fullname" . }}
+  name: {{ template "tkf-docker-calibre-web.fullname" . }}
   labels:
-    {{- include "tkf-docker-calibre-web.labels" . | nindent 4 }}
+    app: {{ template "tkf-docker-calibre-web.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
-  replicas: {{ .Values.replicaCount }}
-  {{- end }}
   selector:
     matchLabels:
-      {{- include "tkf-docker-calibre-web.selectorLabels" . | nindent 6 }}
+      app: {{ template "tkf-docker-calibre-web.name" . }}
+      release: {{ .Release.Name }}
+  replicas: {{ .Values.replicaCount }}
+{{- if .Values.updateStrategy }}
+  strategy:
+{{ toYaml .Values.updateStrategy | indent 4 }}
+{{- end }}
+  minReadySeconds: 5
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
-      annotations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
       labels:
-        {{- include "tkf-docker-calibre-web.selectorLabels" . | nindent 8 }}
+        app: {{ template "tkf-docker-calibre-web.name" . }}
+        release: {{ .Release.Name }}
+        {{- if .Values.podLabels }}
+{{ toYaml .Values.podLabels | indent 8 }}
+        {{- end }}
     spec:
-      {{- with .Values.imagePullSecrets }}
+      {{- if .Values.imagePullSecrets }}
       imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
+{{ toYaml .Values.imagePullSecrets | indent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "tkf-docker-calibre-web.serviceAccountName" . }}
+{{- if .Values.securityContext.enabled }}
       securityContext:
-        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+        runAsGroup: {{ .Values.securityContext.runAsGroup }}
+        runAsUser: {{ .Values.securityContext.runAsUser }}
+{{- end }}
       containers:
         - name: {{ .Chart.Name }}
-          securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
-            - name: http
-              containerPort: 80
-              protocol: TCP
+            - containerPort: 8083
           livenessProbe:
             httpGet:
-              path: /
-              port: http
+              path: "/"
+              port: 8083
           readinessProbe:
             httpGet:
               path: /
-              port: http
+              port: 8083
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}
-      {{- with .Values.nodeSelector }}
-      nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.affinity }}
-      affinity:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.tolerations }}
-      tolerations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+{{ toYaml .Values.resources | indent 12 }}
+          volumeMounts:
+            - name: library
+              mountPath: /books
+            - name: config
+              mountPath: /config
+          env:
+            - name: TZ
+              value: "America/Denver"
+      volumes:
+        - name: library
+          persistentVolumeClaim:
+            claimName: {{ template "tkf-docker-calibre-web.name" . }}-library
+        - name: config
+          persistentVolumeClaim:
+            claimName: {{ template "tkf-docker-calibre-web.name" . }}-config

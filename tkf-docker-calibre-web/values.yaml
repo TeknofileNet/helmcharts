@@ -4,6 +4,20 @@
 
 replicaCount: 1
 
+updateStrategy: {}
+  # type: RollingUpdate
+  # rollingUpdate:
+  #   maxSurge: 1
+  #   maxUnavailable: 0
+
+podAnnotations: {}
+podLabels: {}
+
+securityContext:
+  enabled: true
+  runAsUser: 1001
+  runAsGroup: 1001
+  
 image:
   repository: nginx
   pullPolicy: IfNotPresent
