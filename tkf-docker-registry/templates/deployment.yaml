@@ -73,15 +73,15 @@ spec:
             - name: REGISTRY_STORAGE_DELETE_ENABLED
               value: "true"
 {{- end }}
-        volumes:
-          - name: data
-            persistentVolumeClaim:
-              claimName: {{ template "docker-registry.fullname" . }}
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: {{ template "docker-registry.fullname" . }}
 {{- if .Values.secrets.htpasswd }} 
-          - name: htpasswd
-            secret:
-              secretName: {{ template "docker-registry.fullname" . }}-secret
-              items:
-              - key: htpasswd
-              path: htpasswd
+        - name: htpasswd
+          secret:
+            secretName: {{ template "docker-registry.fullname" . }}-secret
+            items:
+            - key: htpasswd
+            path: htpasswd
 {{- end }}
