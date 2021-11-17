@@ -74,6 +74,9 @@ spec:
               value: "true"
 {{- end }}
           volumes:
+            - name: data
+              persistentVolumeClaim:
+                claimName: {{ template "docker-registry.fullname" . }}
 {{- if .Values.secrets.htpasswd }} 
             - name: htpasswd
               secret:
