@@ -47,7 +47,7 @@ resources: {}
   #   memory: 128Mi
 
 persistence:
-  accessMod: 'ReadWriteOnce'
+  accessMode: 'ReadWriteOnce'
   enabled: true
   size: 10Gi
   deleteEnabled: true
