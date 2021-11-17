@@ -83,15 +83,18 @@ resources: {}
   #   cpu: 100m
   #   memory: 128Mi
 
-autoscaling:
-  enabled: false
-  minReplicas: 1
-  maxReplicas: 100
-  targetCPUUtilizationPercentage: 80
-  # targetMemoryUtilizationPercentage: 80
+persistence:
+  accessMode: 'ReadWriteOnce'
+  enabled: true
+  size: 10Gi
 
-nodeSelector: {}
+service:
+  port: 8083
 
-tolerations: []
+dnsName: books.svcs.teknofile.space
 
-affinity: {}
+nfs:
+  libraryServer: "tkf-nas-02.cosprings.teknofile.net"
+  libraryPath: "/mnt/tkfstorage/media/eBook-Library"
+  configServer: "tkf-nas-02.cosprings.teknofile.net"
+  configPath: "/mnt/tkfstorage/docker/tkf-calibre"
