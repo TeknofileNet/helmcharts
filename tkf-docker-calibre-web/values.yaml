@@ -17,9 +17,10 @@ securityContext:
   enabled: true
   runAsUser: 1001
   runAsGroup: 1001
-  
+
 image:
-  repository: nginx
+  registry: docker.io
+  repository: teknofile/tkf-docker-calibre
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
