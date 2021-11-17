@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: docker-registry-pv
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  nfs:
+    path: /mnt/tkfstorage/docker/registry
+    server: tkf-nas-02.cosprings.teknofile.net
+  persistentVolumeReclaimPolicy: Retain
+  claimRef:
+    namespace: default
+    name: docker-registry-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: docker-registry-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
