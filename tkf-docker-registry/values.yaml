@@ -4,11 +4,25 @@
 
 replicaCount: 1
 
+updateStrategy: {}
+  # type: RollingUpdate
+  # rollingUpdate:
+  #   maxSurge: 1
+  #   maxUnavailable: 0
+
+podAnnotations: {}
+podLabels: {}
+
+securityContext:
+  enabled: true
+  runAsUser: 1001
+  fsGroup: 1001
+
 image:
   registry: docker.io
   repository: registry
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: "2.7.1"
   ## Specify an imagePull Policy
   ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
   ##
@@ -16,6 +30,9 @@ image:
 
 ingress:
   enabled: true
+  className: ""
+  tls:
+    secretName: docker-svcs-teknofile-space-tls
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
@@ -29,8 +46,20 @@ resources: {}
   #   cpu: 100m
   #   memory: 128Mi
 
+persistence:
+  accessMod: 'ReadWriteOnce'
+  enabled: true
+  size: 10Gi
+  deleteEnabled: true
 
 service:
   port: 5000
 
 dnsName: docker.svcs.teknofile.space
+
+nfs:
+  nfsPath: "/mnt/tkfstorage/docker/registry"
+  nfsServer: "tkf-nas-02.cosprings.teknofile.net"
+  
+secrets:
+  htpasswd: ""

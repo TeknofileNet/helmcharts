@@ -1,7 +1,7 @@
 {{- if .Values.persistence.enabled }}
 {{- if not .Values.persistence.existingClaim -}}
 apiVersion: v1
-kind: PersistentVolume
+kind: PersistentVolumeClaim
 metadata:
   name: {{ template "docker-registry.fullname" . }}
   labels:
@@ -10,16 +10,10 @@ metadata:
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
 spec:
-  capacity:
-    storage: {{ .Values.persistence.size | quote }}
   accessModes:
-    - 
-  nfs:
-    path: {{ .Values.nfs.nfsPath }} 
-    server: {{ .Values.nfs.nfsServer }}
-  persistentVolumeReclaimPolicy: Retain
-  claimRef:
-    namespace: default
-    name: {{ template "docker-registry.fullname" . }}
-{{- end -}}
+    - {{ .Values.persistence.accessMode | quote }}
+  resources:
+    requests:
+      storage: {{ .Values.persistence.size | quote }}
 {{- end }}
+{{- end -}}

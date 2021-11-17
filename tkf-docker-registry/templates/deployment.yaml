@@ -1,44 +1,86 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Chart.Name }}
+  name: {{ template "docker-registry.fullname" . }}
   labels:
-    app: {{ .Chart.Name }}
+    app: {{ template "docker-registry.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
 spec:
-  replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ .Chart.Name }}
+      app: {{ template "docker-registry.name" . }}
+      release: {{ .Release.Name }}
+  replicas: {{ .Values.replicaCount }}
+{{- if .Values.updateStrategy }}
+  strategy:
+{{ toYaml .Values.updateStrategy | indent 4 }}
+{{- end }}
+  minReadySeconds: 5
   template:
     metadata:
       labels:
-        app: {{ .Chart.Name }}
+        app: {{ template "docker-registry.name" . }}
+        release: {{ .Release.Name }}
+        {{- if .Values.podLabels }}
+{{ toYaml .Values.podLabels | indent 8 }}
+        {{- end }}
     spec:
+      {{- if .Values.imagePullSecrets }}
+      imagePullSecrets:
+{{ toYaml .Values.imagePullSecrets | indent 8 }}
+      {{- end }}
+{{- if .Values.securityContext.enabled }}
+      securityContext:
+        fsgroup: {{ .Values.securityContext.fsGroup }}
+        runAsUser: {{ .Values.securityContext.runAsUser }}
+{{- end }}
       containers:
-      - name: {{ .Chart.Name }}
-        image: {{ .Values.image.repository }}
-        imagePullPolicy: {{ .Values.image.pullPolicy }}
-        ports:
-        - containerPort: 5000
-        volumeMounts:
-        - name: storage
-          mountPath: /var/lib/registry
-        - name: htpasswd
-          mountPath: /auth
-          readOnly: true
-        env:
-        - name: REGISTRY_AUTH
-          value: htpasswd
-        - name: REGISTRY_AUTH_HTPASSWD_REALM
-          value: "Docker Registry"
-        - name: REGISTRY_AUTH_HTPASSWD_PATH
-          value: /auth/htpasswd
-        - name: REGISTRY_STORAGE_DELETE_ENABLED
-          value: "true"
-      volumes:
-      - name: storage
-        persistentVolumeClaim:
-          claimName: docker-registry-pvc
-      - name: htpasswd
-        secret:
-          secretName: docker-registry-htpasswd
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: 5000
+          livenessProbe:
+            httpGet:
+              path: "/"
+              port: 5000
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 5000
+          resources:
+{{ toYaml .Values.resources | indent 12 }}
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/registry
+            - name: "{{ template "docker-registry.fullname" . }}-config"
+              mountPath: "/etc/docker/registry"
+{{- if .Values.secrets.htpasswd }}
+            - name: htpasswd
+              mountPath: /auth
+              readOnly: true
+{{- end }}
+          env:
+{{- if .Values.secrets.htpasswd }}
+            - name: REGISTRY_AUTH
+              value: htpasswd
+            - name: REGISTRY_AUTH_HTPASSWD_REALM
+              value: "Docker Registry"
+            - name: REGISTRY_AUTH_HTPASSWD_PATH
+              value: /auth/htpasswd
+{{- end }}
+{{- if .Values.persistence.deleteEnabled }}
+            - name: REGISTRY_STORAGE_DELETE_ENABLED
+              value: "true"
+{{- end }}
+          volumes:
+{{- if .Values.secrets.htpasswd }} 
+            - name: htpasswd
+              secret:
+                secretName: {{ template "docker-registry.fullname" . }}-secret
+                items:
+                - key: htpasswd
+                path: htpasswd
+{{- end }}
