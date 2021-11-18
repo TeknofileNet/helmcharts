@@ -42,14 +42,6 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - containerPort: 8083
-          livenessProbe:
-            httpGet:
-              path: "/"
-              port: 8083
-          readinessProbe:
-            httpGet:
-              path: /
-              port: 8083
           resources:
 {{ toYaml .Values.resources | indent 12 }}
           volumeMounts:
