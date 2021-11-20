@@ -4,11 +4,26 @@
 
 replicaCount: 1
 
+updateStrategy: {}
+  # type: RollingUpdate
+  # rollingUpdate:
+  #   maxSurge: 1
+  #   maxUnavailable: 0
+
+podAnnotations: {}
+podLabels: {}
+
+securityContext:
+  enabled: true
+  runAsUser: 1001
+  runAsGroup: 1001
+
 image:
-  repository: nginx
+  registry: docker.io
+  repository: teknofile/tkf-docker-calibre-web
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: "latest"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -68,15 +83,18 @@ resources: {}
   #   cpu: 100m
   #   memory: 128Mi
 
-autoscaling:
-  enabled: false
-  minReplicas: 1
-  maxReplicas: 100
-  targetCPUUtilizationPercentage: 80
-  # targetMemoryUtilizationPercentage: 80
+persistence:
+  accessMode: 'ReadWriteOnce'
+  enabled: true
+  size: 10Gi
 
-nodeSelector: {}
+service:
+  port: 8083
 
-tolerations: []
+dnsName: books.svcs.teknofile.space
 
-affinity: {}
+nfs:
+  libraryServer: "tkf-nas-02.cosprings.teknofile.net"
+  libraryPath: "/mnt/tkfstorage/media/eBook-Library"
+  configServer: "tkf-nas-02.cosprings.teknofile.net"
+  configPath: "/mnt/tkfstorage/docker/tkf-calibre"
