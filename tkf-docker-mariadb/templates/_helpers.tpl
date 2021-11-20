@@ -1,62 +1,150 @@
-{{/*
-Expand the name of the chart.
-*/}}
-{{- define "tkf-docker-mariadb.name" -}}
-{{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
-{{- end }}
+{{/* vim: set filetype=mustache: */}}
+
+{{- define "mariadb.primary.fullname" -}}
+{{- if eq .Values.architecture "replication" }}
+{{- printf "%s-%s" (include "common.names.fullname" .) "primary" | trunc 63 | trimSuffix "-" -}}
+{{- else -}}
+{{- include "common.names.fullname" . -}}
+{{- end -}}
+{{- end -}}
+
+{{- define "mariadb.secondary.fullname" -}}
+{{- printf "%s-%s" (include "common.names.fullname" .) "secondary" | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
 
 {{/*
-Create a default fully qualified app name.
-We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
-If release name contains chart name it will be used as a full name.
+Return the proper MariaDB image name
 */}}
-{{- define "tkf-docker-mariadb.fullname" -}}
-{{- if .Values.fullnameOverride }}
-{{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
-{{- else }}
-{{- $name := default .Chart.Name .Values.nameOverride }}
-{{- if contains $name .Release.Name }}
-{{- .Release.Name | trunc 63 | trimSuffix "-" }}
-{{- else }}
-{{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" }}
-{{- end }}
-{{- end }}
-{{- end }}
+{{- define "mariadb.image" -}}
+{{ include "common.images.image" (dict "imageRoot" .Values.image "global" .Values.global) }}
+{{- end -}}
 
 {{/*
-Create chart name and version as used by the chart label.
+Return the proper metrics image name
 */}}
-{{- define "tkf-docker-mariadb.chart" -}}
-{{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
-{{- end }}
+{{- define "mariadb.metrics.image" -}}
+{{ include "common.images.image" (dict "imageRoot" .Values.metrics.image "global" .Values.global) }}
+{{- end -}}
 
 {{/*
-Common labels
+Return the proper image name (for the init container volume-permissions image)
 */}}
-{{- define "tkf-docker-mariadb.labels" -}}
-helm.sh/chart: {{ include "tkf-docker-mariadb.chart" . }}
-{{ include "tkf-docker-mariadb.selectorLabels" . }}
-{{- if .Chart.AppVersion }}
-app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
-{{- end }}
-app.kubernetes.io/managed-by: {{ .Release.Service }}
-{{- end }}
+{{- define "mariadb.volumePermissions.image" -}}
+{{ include "common.images.image" (dict "imageRoot" .Values.volumePermissions.image "global" .Values.global) }}
+{{- end -}}
 
 {{/*
-Selector labels
+Return the proper Docker Image Registry Secret Names
 */}}
-{{- define "tkf-docker-mariadb.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "tkf-docker-mariadb.name" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
-{{- end }}
+{{- define "mariadb.imagePullSecrets" -}}
+{{ include "common.images.pullSecrets" (dict "images" (list .Values.image .Values.metrics.image .Values.volumePermissions.image) "global" .Values.global) }}
+{{- end -}}
+
+{{ template "mariadb.initdbScriptsCM" . }}
+{{/*
+Get the initialization scripts ConfigMap name.
+*/}}
+{{- define "mariadb.initdbScriptsCM" -}}
+{{- if .Values.initdbScriptsConfigMap -}}
+{{- printf "%s" .Values.initdbScriptsConfigMap -}}
+{{- else -}}
+{{- printf "%s-init-scripts" (include "mariadb.primary.fullname" .) -}}
+{{- end -}}
+{{- end -}}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "tkf-docker-mariadb.serviceAccountName" -}}
-{{- if .Values.serviceAccount.create }}
-{{- default (include "tkf-docker-mariadb.fullname" .) .Values.serviceAccount.name }}
-{{- else }}
-{{- default "default" .Values.serviceAccount.name }}
-{{- end }}
-{{- end }}
+{{- define "mariadb.serviceAccountName" -}}
+{{- if .Values.serviceAccount.create -}}
+    {{ default (include "common.names.fullname" .) .Values.serviceAccount.name }}
+{{- else -}}
+    {{ default "default" .Values.serviceAccount.name }}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Return the configmap with the MariaDB Primary configuration
+*/}}
+{{- define "mariadb.primary.configmapName" -}}
+{{- if .Values.primary.existingConfigmap -}}
+    {{- printf "%s" (tpl .Values.primary.existingConfigmap $) -}}
+{{- else -}}
+    {{- printf "%s" (include "mariadb.primary.fullname" .) -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Return true if a configmap object should be created for MariaDB Secondary
+*/}}
+{{- define "mariadb.primary.createConfigmap" -}}
+{{- if and .Values.primary.configuration (not .Values.primary.existingConfigmap) }}
+    {{- true -}}
+{{- else -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Return the configmap with the MariaDB Primary configuration
+*/}}
+{{- define "mariadb.secondary.configmapName" -}}
+{{- if .Values.secondary.existingConfigmap -}}
+    {{- printf "%s" (tpl .Values.secondary.existingConfigmap $) -}}
+{{- else -}}
+    {{- printf "%s" (include "mariadb.secondary.fullname" .) -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Return true if a configmap object should be created for MariaDB Secondary
+*/}}
+{{- define "mariadb.secondary.createConfigmap" -}}
+{{- if and (eq .Values.architecture "replication") .Values.secondary.configuration (not .Values.secondary.existingConfigmap) }}
+    {{- true -}}
+{{- else -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Return the secret with MariaDB credentials
+*/}}
+{{- define "mariadb.secretName" -}}
+    {{- if .Values.auth.existingSecret -}}
+        {{- printf "%s" .Values.auth.existingSecret -}}
+    {{- else -}}
+        {{- printf "%s" (include "common.names.fullname" .) -}}
+    {{- end -}}
+{{- end -}}
+
+{{/*
+Return true if a secret object should be created for MariaDB
+*/}}
+{{- define "mariadb.createSecret" -}}
+{{- if and (not .Values.auth.existingSecret) (not .Values.auth.customPasswordFiles) }}
+    {{- true -}}
+{{- else -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Compile all warnings into a single message, and call fail.
+*/}}
+{{- define "mariadb.validateValues" -}}
+{{- $messages := list -}}
+{{- $messages := append $messages (include "mariadb.validateValues.architecture" .) -}}
+{{- $messages := without $messages "" -}}
+{{- $message := join "\n" $messages -}}
+
+{{- if $message -}}
+{{-   printf "\nVALUES VALIDATION:\n%s" $message | fail -}}
+{{- end -}}
+{{- end -}}
+
+{{/* Validate values of MariaDB - must provide a valid architecture */}}
+{{- define "mariadb.validateValues.architecture" -}}
+{{- if and (ne .Values.architecture "standalone") (ne .Values.architecture "replication") -}}
+mariadb: architecture
+    Invalid architecture selected. Valid values are "standalone" and
+    "replication". Please set a valid architecture (--set architecture="xxxx")
+{{- end -}}
+{{- end -}}
