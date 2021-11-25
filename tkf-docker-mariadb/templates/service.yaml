@@ -11,6 +11,7 @@ spec:
   ports:
   - name: mysql
     port: 3306
-    targetPort: mysql
+    protocol: TCP
+    targetPort: 3306
   selector:
     app: {{ template "tkf-docker-mariadb.fullname" . }}

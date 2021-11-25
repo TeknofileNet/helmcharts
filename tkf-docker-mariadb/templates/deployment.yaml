@@ -3,14 +3,16 @@ kind: Deployment
 metadata:
   name: {{ include "tkf-docker-mariadb.fullname" . }}
   labels:
-    {{- include "tkf-docker-mariadb.labels" . | nindent 4 }}
+    app: {{ template "tkf-docker-mariadb.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
-  {{- end }}
   selector:
     matchLabels:
-      {{- include "tkf-docker-calibre-web.selectorLabels" . | nindent 6 }}
+      app: {{ template "tkf-docker-mariadb.name" . }}
+      release: {{ .Release.Name }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -18,7 +20,9 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "tkf-docker-calibre-web.selectorLabels" . | nindent 8 }}
+        {{- include "tkf-docker-mariadb.selectorLabels" . | nindent 8 }}
+        app: {{ template "tkf-docker-mariadb.name" . }}
+        release: {{ .Release.Name }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -29,51 +33,30 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
-            - name: MARIADB_ROOT_PASSWORD
+            - name: TZ
+              value: "{{ .Values.containerEnv.tz }}"
+            - name: PUID
+              value: "{{ .Values.containerEnv.puid}}"
+            - name: PGID
+              value: "{{ .Values.containerEnv.pgid}}"
+            - name: MYSQL_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: {{ template "tkf-docker-mariadb.fullname" . }}
                   key: mariadb-root-password
-            - name: MARIADB_USER
-              value: {{ default "" .Values.mariadbUser | quote }}
-            - name: MARIADB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: {{ template "tkf-docker-mariadb.fullname" . }}
-                  key: mariadb-password
-            - name: MARIADB_DATABASE
-              value: {{ default "" .Values.mariadbDatabase | quote }}
           ports:
             - name: mysql
               containerPort: 3306
               protocol: TCP
-          livenessProbe:
-            exec:
-              command:
-              - mysqladmin
-              - ping
-            initialDelaySeconds: 30
-            timeoutSeconds: 5
-          readinessProbe:
-            exec:
-              command:
-                - mysqladmin
-                - ping
-              initialDelaySeconds: 5
-              timeoutSeconds: 1
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
             - name: data
-              mountPath: /data/
-        volume:
-          - name: config
-            configMap:
-              name: {{ template "tkf-docker-mariadb.fullname" . }}
-          - name: data
-          {{- if .Values.persistance.enabled }}
-            persistanceVolumeClaim:
-              claimName: {{ template "tkf-docker-mariadb.fullname" . }}
-          {{- else }}
-            emptyDir: {}
-          {{- end -}}
+              mountPath: /config/
+      volumes:
+        - name: config
+          configMap:
+            name: {{ template "tkf-docker-mariadb.fullname" . }}
+        - name: data
+          persistentVolumeClaim:
+            claimName: {{ template "tkf-docker-mariadb.name" . }}-config

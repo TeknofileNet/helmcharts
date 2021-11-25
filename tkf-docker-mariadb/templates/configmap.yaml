@@ -7,7 +7,5 @@ metadata:
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
 data:
-  my.cnf |-
-{{- if .Values.config }}
-{{ .Values.config | indent 4 }}
-{{- end -}}
+  my.cnf: |-
+{{ .Values.mysqlConfiguration | indent 4 }}

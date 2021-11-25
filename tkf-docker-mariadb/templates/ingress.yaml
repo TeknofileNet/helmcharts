@@ -1,0 +1,12 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRouteTCP
+metadata:
+  name: {{ template "tkf-docker-mariadb.name" . }}
+spec:
+  entryPoints:
+  - mysql
+  routes:
+  - match: HostSNI(`*`)
+    services:
+    - name: {{ template "tkf-docker-mariadb.name" . }}
+      port: 3306

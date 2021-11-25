@@ -1,5 +1,15 @@
-image: teknofile/tkf-docker-mariadb
-tag: latest
+# Default values for tkf-docker-mariadb
+#
+
+replicaCount: 1
+
+podAnnotations: {}
+pobLabels: {}
+
+image: 
+  tag: latest
+  registry: docker.io
+  repository: teknofile/tkf-docker-mariadb
 
 ## Specify an imagePullPolicy (Required)
 ## It's recommended to change this to 'Always' if the image tag is 'latest'
@@ -45,3 +55,40 @@ resources:
   requests:
     memory: 256Mi
     cpu: 250m
+
+nodeSelector: {}
+
+mysqlConfiguration: |-
+  [mysqld]
+  skip-name-resolve
+  basedir=/opt/tkf/mariadb
+  plugin_dir=/opt/tkf/mariadb
+  port=3306
+  socket=/opt/tkf/mariadb/tmp/mysql.sock
+  tmpdir=/opt/tkf/mariadb/tmp
+  max_allowed_packet=16M
+  bind-address=0.0.0.0
+  pid-file=/opt/tkf/mariadb/tmp/mysqld.pid
+  log-error=/opt/tkf/mariadb/logs/mysqld.log
+  character-set-server=UTF8
+  collation-server=utf8_general_ci
+
+  [client]
+  port=3306
+  socket=/opt/tkf/mariadb/tmp/mysql.sock
+  default-character-set=UTF8
+  plugin_dir=/opt/tkf/mariadb/plugin
+
+  [manager]
+  port=3306
+  socket=/opt/tkf/mariadb/tmp/mysql.sock
+  pid-file=/opt/tkf/mariadb/tmp/mysqld.pid
+
+nfs:
+  configServer: "tkf-nas-02.cosprings.teknofile.net"
+  configPath: "/mnt/tkfstorage/docker/tkf-mariadb/"
+
+containerEnv:
+  tz: "America/Denver"
+  puid: 1001
+  pgid: 1001
