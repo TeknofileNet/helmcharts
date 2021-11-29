@@ -9,9 +9,9 @@ metadata:
     heritage: "{{ .Release.Service }}"
 spec:
   ports:
-  - name: mysql
-    port: 3306
+  - port:  3306
     protocol: TCP
     targetPort: 3306
+  type: ClusterIP
   selector:
     app: {{ template "tkf-docker-mariadb.fullname" . }}
