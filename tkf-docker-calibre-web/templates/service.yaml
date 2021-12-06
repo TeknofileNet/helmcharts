@@ -10,4 +10,4 @@ spec:
     - port: {{ .Values.service.port }}
       protocol: TCP
   selector:
-    {{- include "tkf-docker-calibre-web.selectorLabels" . | nindent 4 }}
+    app: {{ template "tkf-docker-calibre-web.name" . }}

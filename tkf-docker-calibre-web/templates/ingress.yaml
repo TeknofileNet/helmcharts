@@ -9,7 +9,7 @@ spec:
   - match: Host(`{{ .Values.dnsName }}`)
     kind: Rule
     services:
-    - name: "{{ template "tkf-docker-calibre-web.name" . }}"
+    - name: {{ template "tkf-docker-calibre-web.name" . }}
       port: 8083
   tls:
-    secretName: books-svcs-teknofile-space-tls
+    secretName: {{ .Values.ingress.tls.secretName }}

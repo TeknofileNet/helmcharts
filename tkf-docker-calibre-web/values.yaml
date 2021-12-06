@@ -66,10 +66,8 @@ ingress:
       paths:
         - path: /
           pathType: ImplementationSpecific
-  tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
+  tls:
+    secretName: tkf-docker-calibre-web-tls
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
@@ -94,7 +92,7 @@ service:
 dnsName: books.svcs.teknofile.space
 
 nfs:
-  libraryServer: "tkf-nas-02.cosprings.teknofile.net"
-  libraryPath: "/mnt/tkfstorage/media/eBook-Library"
-  configServer: "tkf-nas-02.cosprings.teknofile.net"
-  configPath: "/mnt/tkfstorage/docker/tkf-calibre"
+  libraryServer: "tkf-nas-01.cosprings.teknofile.net"
+  libraryPath: "/c/ebooks"
+  configServer: "tkf-nas-01.cosprings.teknofile.net"
+  configPath: "/c/dckr-calibre"
