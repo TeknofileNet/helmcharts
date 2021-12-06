@@ -7,9 +7,7 @@ metadata:
 spec:
   type: {{ .Values.service.type }}
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: http
-      protocol: TCP
-      name: http
+    - protocol: TCP
+      port: 80
   selector:
-    {{- include "tkf-docker-heimdall.selectorLabels" . | nindent 4 }}
+    app: {{ template "tkf-docker-heimdall.name" . }}

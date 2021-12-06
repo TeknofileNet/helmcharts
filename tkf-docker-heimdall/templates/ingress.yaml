@@ -9,5 +9,5 @@ spec:
     - match: Host(`{{.Values.dnsName }}`)
       kind: Rule
       services:
-        - name: {{ template "tkf-docker-heimdall.name" . }}
+        - name: {{ template "tkf-docker-heimdall.fullname" . }}
           port: 80

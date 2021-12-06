@@ -10,7 +10,7 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: {{ tempalte "tkf-docker-heimdall.name" . }}
+      app: {{ template "tkf-docker-heimdall.name" . }}
       release: {{ .Release.Name }}
   replicas: {{ .Values.replicaCount }}
 {{- if .Values.updateStrategy }}
@@ -31,19 +31,12 @@ spec:
       imagePullSecrets:
 {{ toYaml .Values.imagePullSecrets | indent 8 }}
       {{- end }}
-{{- if .Values.securityContext.enabled }}
-      securityContext:
-        runAsGroup: {{ .Values.securityContext.runAsGroup }}
-        runAsUser: {{ .Values.securityContext.runAsUser }}
-{{- end }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - containerPort: 80
-          resources:
-{{ toYaml .Values.resources | indent 12 }}
           volumeMounts:
             - name: config
               mountPath: /config
@@ -51,9 +44,9 @@ spec:
             - name: TZ
               value: "{{ .Values.containerEnv.tz }}"
             - name: PUID
-              value: "{{ .Values.containerEnv.puid }}"
+              value: "1001"
             - name: PGID
-              value: "{{ .Values.containerEnv.pgid }}"
+              value: "1001"
           ports:
             - containerPort: 80
       volumes:
