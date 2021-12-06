@@ -1,15 +1,17 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "tkf-docker-mariadb.fullname" . }}
+  name: {{ template "tkf-docker-mariadb.fullname" . }}
   labels:
-    {{- include "tkf-docker-mariadb.labels" . | nindent 4 }}
+    app: {{ template "tkf-docker-mariadb.fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
 spec:
-  type: {{ .Values.service.type }}
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: http
-      protocol: TCP
-      name: http
+  - port:  3306
+    protocol: TCP
+    targetPort: 3306
+  type: ClusterIP
   selector:
-    {{- include "tkf-docker-mariadb.selectorLabels" . | nindent 4 }}
+    app: {{ template "tkf-docker-mariadb.fullname" . }}
