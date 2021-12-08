@@ -10,8 +10,6 @@ metadata:
 spec:
   ports:
   - port:  3306
-    protocol: TCP
-    targetPort: 3306
-  type: ClusterIP
+  type: LoadBalancer
   selector:
     app: {{ template "tkf-docker-mariadb.fullname" . }}
