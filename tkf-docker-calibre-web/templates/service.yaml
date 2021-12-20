@@ -4,6 +4,7 @@ metadata:
   name: {{ include "tkf-docker-calibre-web.fullname" . }}
   labels:
     {{- include "tkf-docker-calibre-web.labels" . | nindent 4 }}
+    app: {{ include "tkf-docker-calibre-web.fullname" . }}
 spec:
   type: {{ .Values.service.type }}
   ports:

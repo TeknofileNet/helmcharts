@@ -9,7 +9,7 @@ image:
 ## Specify an imagePullPolicy (Required)
 ## It's recommended to change this to 'Always' if the image tag is 'latest'
 ## ref: http://kubernetes.io/docs/user-guide/images/#updating-images
-imagePullPolicy: IfNotPresent
+imagePullPolicy: Always
 
 ## Specify password for root user
 ## ref: https://github.com/bitnami/bitnami-docker-mariadb/blob/master/README.md#setting-the-root-password-on-first-run
@@ -79,10 +79,11 @@ mysqlConfiguration: |-
   pid-file=/opt/tkf/mariadb/tmp/mysqld.pid
 
 nfs:
-  configServer: "tkf-nas-02.cosprings.teknofile.net"
-  configPath: "/mnt/tkfstorage/docker/tkf-mariadb/"
+  configServer: "tkf-nas-01.cosprings.teknofile.net"
+  configPath: "/c/dckr-mariadb"
 
 containerEnv:
   tz: "America/Denver"
-  puid: 1001
-  pgid: 1001
+  puid: "1001"
+  pgid: "1001"
+  mysqlRootPassword: CHANGEME

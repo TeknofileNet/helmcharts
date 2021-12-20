@@ -1,7 +1,7 @@
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
-  name: "{{ template "tkf-docker-calibre-web.name" . }}-secure"
+  name: {{ template "tkf-docker-calibre-web.name" . }}
 spec:
   entryPoints:
     - websecure
@@ -9,7 +9,7 @@ spec:
   - match: Host(`{{ .Values.dnsName }}`)
     kind: Rule
     services:
-    - name: {{ template "tkf-docker-calibre-web.name" . }}
+    - name: {{ template "tkf-docker-calibre-web.fullname" . }}
       port: 8083
   tls:
     secretName: {{ .Values.ingress.tls.secretName }}
