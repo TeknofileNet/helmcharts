@@ -39,13 +39,13 @@ spec:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
           - name: PUID
-            value: "1001"
+            value: {{ .Values.containerEnv.puid | quote }}
           - name: PGID
-            value: "1001"
+            value: {{ .Values.containerEnv.pgid | quote }}
           - name: TZ
-            value: "America/Denver"
+            value: {{ .Values.containerEnv.tz | quote }}
           - name: MYSQL_ROOT_PASSWORD
-            value: FOOBAR
+            value: {{ .Values.containerEnv.mysqlRootPassword | quote }}
           volumeMounts:
           - name: mysql-persistent-storage
             mountPath: /config
