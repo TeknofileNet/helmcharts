@@ -1,61 +1,60 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "tkf-docker-nzbget.fullname" . }}
+  name: {{ template "tkf-docker-nzbget.fullname" . }}
   labels:
-    {{- include "tkf-docker-nzbget.labels" . | nindent 4 }}
+    app: {{ template  "tkf-docker-nzbget.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
-  replicas: {{ .Values.replicaCount }}
-  {{- end }}
   selector:
     matchLabels:
-      {{- include "tkf-docker-nzbget.selectorLabels" . | nindent 6 }}
+      app: {{ template "tkf-docker-nzbget.name" . }}
+      release: {{ .Release.Name }}
+  replicas: {{ .Values.replicaCount }}
+{{- if .Values.updateStrategy }}
+  strategy:
+{{ toYaml .Values.updateStrategy | indent 4 }}
+{{- end }}
+  minReadySeconds: 5
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
-      annotations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
       labels:
-        {{- include "tkf-docker-nzbget.selectorLabels" . | nindent 8 }}
+        app: {{ template "tkf-docker-nzbget.name" . }}
+        release: {{ .Release.Name }}
+        {{- if .Values.podLabels }}
+{{ toYaml .Values.podLabels | indent 8 }}
+        {{- end }}
     spec:
-      {{- with .Values.imagePullSecrets }}
+      {{- if .Values.imagePullSecrets }}
       imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
+{{ toYaml .Values.imagePullSecrets | indent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "tkf-docker-nzbget.serviceAccountName" . }}
-      securityContext:
-        {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
         - name: {{ .Chart.Name }}
-          securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
-            - name: http
-              containerPort: 80
-              protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http
-          resources:
-            {{- toYaml .Values.resources | nindent 12 }}
-      {{- with .Values.nodeSelector }}
-      nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.affinity }}
-      affinity:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.tolerations }}
-      tolerations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+            - containerPort: 6789
+          volumeMounts:
+            - name: config
+              mountPath: /config
+            - name: downloads
+              mountPath: /downloads
+          env:
+            - name: TZ
+              value: "{{ .Values.containerEnv.tz }}"
+            - name: PUID
+              value: "1001"
+            - name: PGID
+              value: "1001"
+          ports:
+            - containerPort: 80
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: {{ template "tkf-docker-nzbget.name" . }}-config
+        - name: downloads
+          persistentVolumeClaim:
+            claimName: {{ template "tkf-docker-nzbget.name" . }}-downloads

@@ -1,13 +1,21 @@
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRoute
+apiVersion: networking.k8s.io/v1
+kind: Ingress
 metadata:
-  name: {{ template "tkf-docker-heimdall.name" . }}
+  name: {{ include "tkf-docker-heimdall.fullname" . }}
 spec:
-  entryPoints:
-    - web
-  routes:
-    - match: Host(`{{.Values.dnsName }}`)
-      kind: Rule
-      services:
-        - name: {{ template "tkf-docker-heimdall.fullname" . }}
-          port: 80
+  ingressClassName: nginx
+  tls:
+  - hosts:
+      - heimdall.cosprings.teknofile.net
+    secretName: tkf-global-wildcard-tls
+  rules:
+    - host: heimdall.cosprings.teknofile.net
+      http:
+        paths:
+          - backend:
+              service:
+                name: {{ include "tkf-docker-heimdall.fullname" . }}
+                port:
+                  number: 80
+            path: /
+            pathType: ImplementationSpecific

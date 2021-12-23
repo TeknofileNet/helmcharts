@@ -7,9 +7,24 @@ metadata:
 spec:
   type: {{ .Values.service.type }}
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: http
-      protocol: TCP
-      name: http
+    - protocol: TCP
+      port: 80
+      name: gogs-http
   selector:
-    {{- include "tkf-docker-gogs.selectorLabels" . | nindent 4 }}
+    app: {{ template "tkf-docker-gogs.name" . }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "tkf-docker-gogs.fullname" . }}-ssh
+  labels:
+    {{- include "tkf-docker-gogs.labels" . | nindent 4 }}
+spec:
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 22
+      targetPort: 22
+      name: gogs-ssh
+  selector:
+    app: {{ template "tkf-docker-gogs.name" . }}
