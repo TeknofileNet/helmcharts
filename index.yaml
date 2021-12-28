@@ -3,7 +3,7 @@ entries:
   tkf-docker-calibre-web:
   - apiVersion: v2
     appVersion: 0.6.14
-    created: "2021-12-28T15:42:54.310870689-07:00"
+    created: "2021-12-28T15:47:44.966081229-07:00"
     description: A Helm chart for Kubernetes
     digest: 58bf49f52248123c78128b22677c5b9c38b310ede665b63976349bdef2040838
     name: tkf-docker-calibre-web
@@ -14,9 +14,9 @@ entries:
   tkf-docker-lum:
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2021-12-28T15:42:54.311751074-07:00"
+    created: "2021-12-28T15:47:44.967006118-07:00"
     description: LDAP User Manager
-    digest: 54e21b128ba2a02fc8ce40dced0807dc40007de23dd3e85a6f86639d38d5c86c
+    digest: 1c96100dcf42dcb64c8a08a189ca793c475d3fef50829957f2f7e79cd528ef07
     name: tkf-docker-lum
     type: application
     urls:
@@ -25,7 +25,7 @@ entries:
   tkf-docker-registry:
   - apiVersion: v2
     appVersion: 2.7.1
-    created: "2021-12-28T15:42:54.322410133-07:00"
+    created: "2021-12-28T15:47:44.978252778-07:00"
     description: This chart deploys a docker registry
     digest: 7f3d10075917f8a00f01a20773bf42ee52083bbfb5b0c7b4b9661a9c5324f7df
     name: tkf-docker-registry
@@ -35,7 +35,7 @@ entries:
     version: 0.1.19
   - apiVersion: v2
     appVersion: 2.7.1
-    created: "2021-12-28T15:42:54.321798092-07:00"
+    created: "2021-12-28T15:47:44.977300218-07:00"
     description: This chart deploys a docker registry
     digest: 07e2c96fa13072bcc65fb1c37335e655f3bb1f7cde1e6cc6a53e54f3417254f2
     name: tkf-docker-registry
@@ -45,7 +45,7 @@ entries:
     version: 0.1.18
   - apiVersion: v2
     appVersion: 2.7.1
-    created: "2021-12-28T15:42:54.321230145-07:00"
+    created: "2021-12-28T15:47:44.976316108-07:00"
     description: This chart deploys a docker registry
     digest: 51089e99e8188e26d314927fe33f0a578fd7ce2e8388687e37db3e92920600c2
     name: tkf-docker-registry
@@ -55,7 +55,7 @@ entries:
     version: 0.1.17
   - apiVersion: v2
     appVersion: 2.7.1
-    created: "2021-12-28T15:42:54.320650034-07:00"
+    created: "2021-12-28T15:47:44.975310217-07:00"
     description: This chart deploys a docker registry
     digest: 77d6caa4628d04bff08481fadea011f8b9c1574f87ffcfa3c95725d23df62d8d
     name: tkf-docker-registry
@@ -65,7 +65,7 @@ entries:
     version: 0.1.16
   - apiVersion: v2
     appVersion: 2.7.1
-    created: "2021-12-28T15:42:54.319603917-07:00"
+    created: "2021-12-28T15:47:44.97422125-07:00"
     description: This chart deploys a docker registry
     digest: 60d91d546a29942ae96a1758a0b86254600d2ff46f1fdb7a570cdfd4a928ce18
     name: tkf-docker-registry
@@ -75,7 +75,7 @@ entries:
     version: 0.1.15
   - apiVersion: v2
     appVersion: 2.7.1
-    created: "2021-12-28T15:42:54.317885868-07:00"
+    created: "2021-12-28T15:47:44.97252948-07:00"
     description: This chart deploys a docker registry
     digest: 1b7d7b1e58bc1a46bb9749012d15157310da23092ce31add2ff03d6fd1decdda
     name: tkf-docker-registry
@@ -85,7 +85,7 @@ entries:
     version: 0.1.14
   - apiVersion: v2
     appVersion: 2.7.1
-    created: "2021-12-28T15:42:54.316968774-07:00"
+    created: "2021-12-28T15:47:44.97195482-07:00"
     description: This chart deploys a docker registry
     digest: 4dc740fc7cd93a3693ca8965b2c7cc546e64083348364050ab16da10749a4544
     name: tkf-docker-registry
@@ -95,7 +95,7 @@ entries:
     version: 0.1.13
   - apiVersion: v2
     appVersion: 2.7.1
-    created: "2021-12-28T15:42:54.31603049-07:00"
+    created: "2021-12-28T15:47:44.971182709-07:00"
     description: This chart deploys a docker registry
     digest: 778cc59686e7743a2a29314a49876b303eda4ac67bb867ee3a3d725ee712c728
     name: tkf-docker-registry
@@ -105,7 +105,7 @@ entries:
     version: 0.1.12
   - apiVersion: v2
     appVersion: 2.7.1
-    created: "2021-12-28T15:42:54.314989903-07:00"
+    created: "2021-12-28T15:47:44.970235037-07:00"
     description: This chart deploys a docker registry
     digest: c171b097f4793ecb4d28c8429d98d2b8233f2ffbf770e9fa5eaabff3102ed5f9
     name: tkf-docker-registry
@@ -115,7 +115,7 @@ entries:
     version: 0.1.11
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2021-12-28T15:42:54.314021463-07:00"
+    created: "2021-12-28T15:47:44.969297375-07:00"
     description: This chart deploys a docker registry
     digest: 80eca3b693c29baa0132b478641929f8d1b1890a4d38cf2ccb3a6d1684b6c064
     name: tkf-docker-registry
@@ -125,7 +125,7 @@ entries:
     version: 0.1.10
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2021-12-28T15:42:54.32455759-07:00"
+    created: "2021-12-28T15:47:44.982535999-07:00"
     description: This chart deploys a docker registry
     digest: 7a964f6d732821fe731ee9d56b9194eeecf39ba7043118d5e6900337e16802a7
     name: tkf-docker-registry
@@ -135,7 +135,7 @@ entries:
     version: 0.1.8
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2021-12-28T15:42:54.324304424-07:00"
+    created: "2021-12-28T15:47:44.981890646-07:00"
     description: This chart deploys a docker registry
     digest: bbe9b5bed166bdcf4bb4e44f817d0591e191e4fb123d96b8321e21060360df90
     name: tkf-docker-registry
@@ -145,7 +145,7 @@ entries:
     version: 0.1.7
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2021-12-28T15:42:54.324038174-07:00"
+    created: "2021-12-28T15:47:44.981269609-07:00"
     description: This chart deploys a docker registry
     digest: e3d9d1782e29a5fa3bbf5ff4786ad34fa73ce5aeb1c8c30497fb37257f76e771
     name: tkf-docker-registry
@@ -155,7 +155,7 @@ entries:
     version: 0.1.6
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2021-12-28T15:42:54.323765341-07:00"
+    created: "2021-12-28T15:47:44.980664812-07:00"
     description: This chart deploys a docker registry
     digest: b2288f4ab8400b63565fe66375c505ce2b50291581a51c7a297e880a1091d872
     name: tkf-docker-registry
@@ -165,7 +165,7 @@ entries:
     version: 0.1.5
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2021-12-28T15:42:54.323510061-07:00"
+    created: "2021-12-28T15:47:44.980087126-07:00"
     description: This chart deploys a docker registry
     digest: 32f8f718488312191382a027e3fa81d35bf6c17e5ef36dbc33faad3756a0cd3a
     name: tkf-docker-registry
@@ -175,7 +175,7 @@ entries:
     version: 0.1.4
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2021-12-28T15:42:54.323152529-07:00"
+    created: "2021-12-28T15:47:44.979479003-07:00"
     description: This chart deploys a docker registry
     digest: 804345477cba4db6ca71ef46d00fd32bee882e8984b62eba483189b21053d8e6
     name: tkf-docker-registry
@@ -185,7 +185,7 @@ entries:
     version: 0.1.3
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2021-12-28T15:42:54.322800106-07:00"
+    created: "2021-12-28T15:47:44.978896007-07:00"
     description: This chart deploys a docker registry
     digest: a851862e68d97582b686595f1f0b69c776a64f6fa7491648db099625dd87bab5
     name: tkf-docker-registry
@@ -195,7 +195,7 @@ entries:
     version: 0.1.2
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2021-12-28T15:42:54.313440901-07:00"
+    created: "2021-12-28T15:47:44.968685264-07:00"
     description: This chart deploys a docker registry
     digest: 4c4a719f37d1947d263d9fbfb7eb7e50fe63402e9273afc78af187ce62417c90
     name: tkf-docker-registry
@@ -205,7 +205,7 @@ entries:
     version: 0.1.1
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2021-12-28T15:42:54.312798704-07:00"
+    created: "2021-12-28T15:47:44.968048728-07:00"
     description: A Helm chart for Kubernetes
     digest: 6b54d5dc1f85e0ae6c26f1a61004fee12f92a520e9cac105818a0cf052c34931
     name: tkf-docker-registry
@@ -213,4 +213,4 @@ entries:
     urls:
     - tkf-docker-registry-0.1.0.tgz
     version: 0.1.0
-generated: "2021-12-28T15:42:54.309486728-07:00"
+generated: "2021-12-28T15:47:44.964686458-07:00"
