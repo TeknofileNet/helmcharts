@@ -12,10 +12,7 @@ spec:
     matchLabels:
       app: {{ template "tkf-docker-lum.name" . }}
       release: {{ .Release.Name }}
-  {{- if not .Values.autoscaling.enabled }}
-  replicas: {{ .Values.replicaCount }}
-  {{- end }}
-  minReadySeconds: 5
+  minReadySeconds: 30
   template:
     metadata:
       labels:
@@ -34,7 +31,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: 80
+              containerPort: {{ .Values.service.port }}
               protocol: TCP
           livenessProbe:
             httpGet:
@@ -51,19 +48,20 @@ spec:
               value: "{{ .Values.containerEnv.tz }}"
             - name: LDAP_ADMINS_GROUP
               value: "admins"
+              value: "{{ .Values.containerEnv.ldap_admins_group }}"
             - name: LDAP_ADMIN_BIND_DN
-              value: "cn=admin,dc=cosprings,dc=teknofile,dc=net"
+              value: "{{ .Values.containerEnv.ldap_admin_bind_dn }}"
             - name: LDAP_ADMIN_BIND_PWD
-              value: "changeme"
+              value: "{{ .Values.containerEnv.ldap_admin_bind_pwd }}"
             - name: LDAP_BASE_DN
-              value: "dc=cosprings,dc=teknofile,dc=net"
+              value: "{{ .Values.containerEnv.ldap_base_dn }}"
             - name: LDAP_IGNORE_CERT_ERRORS
-              value: "TRUE"
+              value: "{{ .Values.containerEnv.ldap_ignore_cert_errors }}"
             - name: LDAP_REQUIRE_STARTTLS
-              value: "TRUE"
+              value: "{{ .Values.containerEnv.ldap_require_starttls }}"
             - name: LDAP_URI
-              value: "ldap://ldap1.cosprings.teknofile.net"
+              value: "{{ .Values.containerEnv.ldap_uri }}"
             - name: SERVER_NAME
-              value: "lum.cosprings.teknofile.net"
+              value: "{{ .Values.containerEnv.server_name }}"
             - name: EMAIL_DOMAIN
-              value: "teknofile.net"
+              value: "{{ .Values.containerEnv.email_domain }}"

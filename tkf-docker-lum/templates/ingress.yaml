@@ -6,10 +6,10 @@ spec:
   ingressClassName: nginx
   tls:
   - hosts:
-      - lum.cosprings.teknofile.net
-    secretName: tkf-global-wildcard-tls
+      - {{ .Values.ingress.dnsName }}
+    secretName: {{ .Values.ingress.tlsSecretName }}
   rules:
-    - host: lum.cosprings.teknofile.net
+    - host: {{ .Values.ingress.dnsName }}
       http:
         paths:
           - backend:
@@ -18,4 +18,4 @@ spec:
                 port:
                   number: 80
             path: /
-            pathType: ImplementationSpecific
+            pathType: Prefix
