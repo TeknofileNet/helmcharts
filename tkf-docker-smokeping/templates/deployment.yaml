@@ -45,8 +45,19 @@ spec:
             httpGet:
               path: /
               port: http
+          volumeMounts:
+            - mountPath: /config
+              name: smokeping-data
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+      volumes:
+        - name: smokeping-data
+          {{- if .Values.persistence.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ .Values.persistence.existingClaim | default (include "tkf-docker-smokeping.name" . ) }}
+          {{- else }}
+          emptyDir: {}
+          {{ end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

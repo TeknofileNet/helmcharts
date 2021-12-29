@@ -3,9 +3,9 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: {{ template "tkf-docker-calibre-web.name" . }}-config
+  name: {{ template "tkf-docker-smokeping.name" . }}
   labels:
-    app: {{ template "tkf-docker-calibre-web.name" . }}
+    app: {{ template "tkf-docker-smokeping.name" . }}
     chart: {{ .Chart.Name }}-{{ .Chart.Version }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
@@ -14,12 +14,14 @@ spec:
     storage: {{ .Values.persistence.size | quote }}
   accessModes:
     - {{ .Values.persistence.accessMode }}
+  {{- if .Values.persistence.nfs.enabled }}
   nfs:
-    path: {{ .Values.nfs.configPath }}
-    server: {{ .Values.nfs.configServer }}
+    path: {{ .Values.persistence.nfs.configPath }}
+    server: {{ .Values.persistence.nfs.configServer }}
+  {{- end }}
   persistentVolumeReclaimPolicy: Retain
   claimRef:
     namespace: default
-    name: {{ template "tkf-docker-calibre-web.name" . }}-config
+    name: {{ template "tkf-docker-smokeping.name" . }}
 {{- end }}
 {{- end }}
