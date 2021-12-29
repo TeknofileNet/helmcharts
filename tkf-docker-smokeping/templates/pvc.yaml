@@ -3,9 +3,9 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ template "tkf-docker-calibre-web.name" . }}-config
+  name: {{ template "tkf-docker-smokeping.name" . }}
   labels:
-    app: {{ template "tkf-docker-calibre-web.name" . }}
+    app: {{ template "tkf-docker-smokeping.name" . }}
     chart: {{ .Chart.Name }}-{{ .Chart.Version }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
