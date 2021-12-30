@@ -14,3 +14,4 @@ Charts that I have working (and am running them personally in my own systems):
 - tkf-docker-smokeping
 - tkf-docker-piwigo
 - tkf-docker-registry
+- tkf-docker-mariadb (with a load balancer whoo hoo)

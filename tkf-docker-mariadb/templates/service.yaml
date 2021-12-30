@@ -3,13 +3,12 @@ kind: Service
 metadata:
   name: {{ template "tkf-docker-mariadb.fullname" . }}
   labels:
-    app: {{ template "tkf-docker-mariadb.fullname" . }}
-    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-    release: "{{ .Release.Name }}"
-    heritage: "{{ .Release.Service }}"
+    {{- include "tkf-docker-mariadb.labels" . | nindent 4 }}
 spec:
+  type: {{ .Values.service.type }}
   ports:
-  - port:  3306
-  type: LoadBalancer
+  - port:  {{ .Values.service.port }}
+    protocol: TCP
+    targetPort: {{ .Values.service.port }}
   selector:
-    app: {{ template "tkf-docker-mariadb.fullname" . }}
+    {{- include "tkf-docker-mariadb.selectorLabels" . | nindent 4 }}

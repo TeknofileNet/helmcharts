@@ -1,7 +1,9 @@
+{{- if .Values.persistence.enabled }}
+{{- if not .Values.persistence.existingClaim }}
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: {{ template "tkf-docker-mariadb.name" . }}-config
+  name: {{ template "tkf-docker-mariadb.name" . }}
   labels:
     app: {{ template "tkf-docker-mariadb.name" . }}
     chart: {{ .Chart.Name }}-{{ .Chart.Version }}
@@ -12,10 +14,14 @@ spec:
     storage: {{ .Values.persistence.size | quote }}
   accessModes:
     - {{ .Values.persistence.accessMode }}
+  {{- if .Values.persistence.nfs.enabled }}
   nfs:
     path: {{ .Values.nfs.configPath }}
     server: {{ .Values.nfs.configServer }}
+  {{- end }}
   persistentVolumeReclaimPolicy: Retain
   claimRef:
     namespace: default
-    name: {{ template "tkf-docker-mariadb.name" . }}-config
+    name: {{ template "tkf-docker-mariadb.name" . }}
+{{- end }}
+{{- end }}
