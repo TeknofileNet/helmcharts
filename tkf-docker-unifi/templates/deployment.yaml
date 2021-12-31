@@ -45,7 +45,7 @@ spec:
       volumes:
         - name: unifi-config
           {{- if .Values.persistence.enabled }}
-          persistentVolumeCLaim:
+          persistentVolumeClaim:
             claimName: {{ .Values.persistence.existingClaim | default (include "tkf-docker-unifi.name" . ) }}
           {{- else }}
           emptyDir: {}
