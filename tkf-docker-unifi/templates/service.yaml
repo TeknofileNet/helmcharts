@@ -9,9 +9,11 @@ spec:
   loadBalancerIP: {{ .Values.service.loadBalancerIP }}
   ports:
     - name: http
+      port: http
       targetPort: http
       protocol: TCP
     - name: https
+      port: https
       targetPort: https
       protocol: TCP
     - name: stun
@@ -50,7 +52,7 @@ spec:
     - name: port-{{ . }}
       port: {{ . }}
       targetPort: {{ . }}
-      portocol: UDP
+      protocol: UDP
     {{- end }}
     - name: port-10001
       port: 10001
