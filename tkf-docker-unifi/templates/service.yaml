@@ -9,12 +9,12 @@ spec:
   loadBalancerIP: {{ .Values.service.loadBalancerIP }}
   ports:
     - name: http
-      port: http
-      targetPort: http
+      port: 80
+      targetPort: 80
       protocol: TCP
     - name: https
-      port: https
-      targetPort: https
+      port: 443
+      targetPort: 443
       protocol: TCP
     - name: stun
       port: 3478
