@@ -47,6 +47,27 @@ spec:
               port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - mountPath: /config
+              name: nextcloud-config
+            - mountPath: /data
+              name: nextcloud-data
+      volumes:
+        - name: nextcloud-config
+          {{- if .Values.persistence.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ .Values.persistence.existingClaim | default (include "tkf-docker-nextcloud.name" . ) }}
+          {{- else }}
+          emptyDir: {}
+          {{- end }}
+        - name: nextcloud-data
+          {{- if .Values.persistence.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ .Values.persistence.existingClaimData | default (include "tkf-docker-nextcloud.name" . ) }}-data
+          {{- else }}
+          emptyDir: {}
+          {{- end }}
+
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

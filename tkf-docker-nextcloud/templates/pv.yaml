@@ -1,0 +1,51 @@
+{{- if .Values.persistence.enabled }}
+{{- if not .Values.persistence.existingClaim }}
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{ template "tkf-docker-nextcloud.name" . }}
+  labels:
+    app: {{ template "tkf-docker-nextcloud.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  capacity:
+    storage: {{ .Values.persistence.size | quote }}
+  accessModes:
+    - {{ .Values.persistence.accessMode }}
+  {{- if .Values.persistence.nfs.enabled }}
+  nfs:
+    path: {{ .Values.persistence.nfs.configPath }}
+    server: {{ .Values.persistence.nfs.configServer }}
+  {{- end }}
+  persistentVolumeReclaimPolicy: Retain
+  claimRef:
+    namespace: default
+    name: {{ template "tkf-docker-nextcloud.name" . }}
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{ template "tkf-docker-nextcloud.name" . }}-data
+  labels:
+    app: {{ template "tkf-docker-nextcloud.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  capacity:
+    storage: {{ .Values.persistence.size | quote }}
+  accessModes:
+    - {{ .Values.persistence.accessMode }}
+  {{- if .Values.persistence.nfs.enabled }}
+  nfs:
+    path: {{ .Values.persistence.nfs.dataPath }}
+    server: {{ .Values.persistence.nfs.dataServer }}
+  {{- end }}
+  persistentVolumeReclaimPolicy: Retain
+  claimRef:
+    namespace: default
+    name: {{ template "tkf-docker-nextcloud.name" . }}-data
+{{- end }}
+{{- end }}
