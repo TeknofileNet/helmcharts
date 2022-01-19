@@ -64,8 +64,10 @@ nfs:
   configPath: "/c/sonarr"
   mediaServer: "tkf-nas-02.cosprings.teknofile.net"
   mediaPath: "/mnt/tkfstorage/media/TV Shows"
-  nzbgetServer: "tkf-nas-01.cosprings.teknofile.net"
-  nzbgetPath: "/c/nzbget"
+#  nzbgetServer: "tkf-nas-01.cosprings.teknofile.net"
+#  nzbgetPath: "/c/nzbget"
+  nzbgetServer: "tkf-nas-02.cosprings.teknofile.net"
+  nzbgetPath: "/mnt/tkfstorage/media/nzbget"
 
 service:
   port: 80
