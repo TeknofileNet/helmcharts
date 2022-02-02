@@ -25,10 +25,13 @@ serviceAccount:
 
 podLabels: {}
 
-securityContext:
-  enabled: true
-  runAsUser: 1001
-  runAsGroup: 1001
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
 
 image:
   registry: docker.io
