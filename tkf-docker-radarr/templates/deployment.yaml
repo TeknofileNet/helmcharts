@@ -3,63 +3,86 @@ kind: Deployment
 metadata:
   name: {{ template "tkf-docker-radarr.fullname" . }}
   labels:
-    app: {{ template  "tkf-docker-radarr.name" . }}
-    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
+    {{- include "tkf-docker-radarr.fullname" . | nindent 4 }}
 spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
   selector:
     matchLabels:
-      app: {{ template "tkf-docker-radarr.name" . }}
-      release: {{ .Release.Name }}
-  replicas: {{ .Values.replicaCount }}
-{{- if .Values.updateStrategy }}
-  strategy:
-{{ toYaml .Values.updateStrategy | indent 4 }}
-{{- end }}
-  minReadySeconds: 5
+      {{- include "tkf-docker-radarr.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      labels:
-        app: {{ template "tkf-docker-radarr.name" . }}
-        release: {{ .Release.Name }}
-        {{- if .Values.podLabels }}
-{{ toYaml .Values.podLabels | indent 8 }}
-        {{- end }}
-    spec:
-      {{- if .Values.imagePullSecrets }}
-      imagePullSecrets:
-{{ toYaml .Values.imagePullSecrets | indent 8 }}
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . nindent 8 }}
       {{- end }}
+      labels:
+        {{- include "tkf-docker-radarr.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "tkf-docker-radarr.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
         - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - containerPort: 7878
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 7878
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 7878
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
-            - name: config
+            - name: radarr-data
               mountPath: /config
-            - name: media
+            - name: radarr-media
               mountPath: /tv
-            - name: nzbget
+            - name: radarr-nzbget
               mountPath: /downloads
-          env:
-            - name: TZ
-              value: "{{ .Values.containerEnv.tz }}"
-            - name: PUID
-              value: "1001"
-            - name: PGID
-              value: "1001"
-          ports:
-            - containerPort: 7878
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       volumes:
-        - name: config
+        - name: radarr-config
+          {{- if .Values.persistence.enabled }}
           persistentVolumeClaim:
-            claimName: {{ template "tkf-docker-radarr.name" . }}-config
-        - name: nzbget
+            claimName: {{ .Values.persistence.existingClaim | default (include "tkf-docker-radarr.name" . ) }}-config
+          {{- else }}
+          emptyDir: {}
+          {{- end }}
+        - name: radarr-nzbget
+          {{- if .Values.persistence.enabled }}
           persistentVolumeClaim:
-            claimName: {{ template "tkf-docker-radarr.name" . }}-nzbget
-        - name: media
+            claimName: {{ .Values.persistence.existingClaim | default (include "tkf-docker-radarr.name" . ) }}-nzbget
+          {{- else }}
+          emptyDir: {}
+          {{- end }}
+        - name: radarr-media
+          {{- if .Values.persistence.enabled }}
           persistentVolumeClaim:
-            claimName: {{ template "tkf-docker-radarr.name" . }}-media
+            claimName: {{ .Values.persistence.existingClaim | default (include "tkf-docker-radarr.name" . ) }}-media
+          {{- else }}
+          emptyDir: {}
+          {{- end }}

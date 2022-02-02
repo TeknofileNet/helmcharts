@@ -14,9 +14,11 @@ spec:
     storage: {{ .Values.persistence.size | quote }}
   accessModes:
     - {{ .Values.persistence.accessMode }}
+  {{- if .Values.persistence.nfs.enabled }}
   nfs:
-    path: {{ .Values.nfs.configPath }}
-    server: {{ .Values.nfs.configServer }}
+    path: {{ .Values.persistence.nfs.configPath }}
+    server: {{ .Values.persistence.nfs.configServer }}
+  {{- end }}
   persistentVolumeReclaimPolicy: Retain
   claimRef:
     namespace: default
@@ -38,9 +40,11 @@ spec:
     storage: {{ .Values.persistence.size | quote }}
   accessModes:
     - {{ .Values.persistence.accessMode }}
+  {{- if .Values.persistence.nfs.enabled }}
   nfs:
-    path: {{ .Values.nfs.mediaPath }}
-    server: {{ .Values.nfs.mediaServer }}
+    path: {{ .Values.persistence.nfs.mediaPath }}
+    server: {{ .Values.persistence.nfs.mediaServer }}
+  {{- end }}
   persistentVolumeReclaimPolicy: Retain
   claimRef:
     namespace: default
@@ -60,9 +64,11 @@ spec:
     storage: {{ .Values.persistence.size | quote }}
   accessModes:
     - {{ .Values.persistence.accessMode }}
+  {{- if .Values.persistence.nfs.enabled }}
   nfs:
     path: {{ .Values.nfs.nzbgetPath }}
     server: {{ .Values.nfs.nzbgetServer }}
+  {{- end }}
   persistentVolumeReclaimPolicy: Retain
   claimRef:
     namespace: default
