@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: {{ template "tkf-docker-radarr.fullname" . }}
   labels:
-    {{- include "tkf-docker-radarr.fullname" . | nindent 4 }}
+    {{- include "tkf-docker-radarr.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}

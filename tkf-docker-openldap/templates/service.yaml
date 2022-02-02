@@ -6,10 +6,16 @@ metadata:
     {{- include "tkf-docker-openldap.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
+  loadBalancerIP: {{ .Values.service.loadBalancerIP }}
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: http
+    - name: ldap
+      port: 389
+      targetPort: 389
       protocol: TCP
-      name: http
+    - name: ldaps
+      port: 636
+      targetPort: 636
+      protocol: TCP
+
   selector:
     {{- include "tkf-docker-openldap.selectorLabels" . | nindent 4 }}
