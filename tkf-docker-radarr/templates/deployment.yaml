@@ -46,7 +46,7 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
-            - name: radarr-data
+            - name: radarr-config
               mountPath: /config
             - name: radarr-media
               mountPath: /tv
