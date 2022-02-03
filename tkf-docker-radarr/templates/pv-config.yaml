@@ -66,8 +66,8 @@ spec:
     - {{ .Values.persistence.accessMode }}
   {{- if .Values.persistence.nfs.enabled }}
   nfs:
-    path: {{ .Values.nfs.nzbgetPath }}
-    server: {{ .Values.nfs.nzbgetServer }}
+    path: {{ .Values.persistence.nfs.nzbgetPath }}
+    server: {{ .Values.persistence.nfs.nzbgetServer }}
   {{- end }}
   persistentVolumeReclaimPolicy: Retain
   claimRef:
