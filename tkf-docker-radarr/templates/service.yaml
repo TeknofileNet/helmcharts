@@ -10,4 +10,4 @@ spec:
     - protocol: TCP
       port: 7878
   selector:
-    app: {{ template "tkf-docker-radarr.name" . }}
+    {{- include "tkf-docker-radarr.selectorLabels" . | nindent 4 }}
