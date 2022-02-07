@@ -40,8 +40,8 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
-            mountPath: /var/lib/ghost/content
-            name: ghost-config
+            - name: ghost-config
+              mountPath: /var/lib/ghost/content
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
