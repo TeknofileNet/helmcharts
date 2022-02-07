@@ -12,11 +12,6 @@ updateStrategy: {}
 
 podLabels: {}
 
-securityContext:
-  enabled: true
-  runAsUser: 1001
-  runAsGroup: 1001
-
 image:
   registry: docker.io
   repository: teknofile/tkf-docker-sonarr
