@@ -3,47 +3,48 @@ kind: Deployment
 metadata:
   name: {{ template "tkf-docker-calibre-web.fullname" . }}
   labels:
-    app: {{ template "tkf-docker-calibre-web.name" . }}
-    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
+    {{- include "tkf-docker-calibre-web.labels" . | nindent 4 }}
 spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
   selector:
     matchLabels:
-      app: {{ template "tkf-docker-calibre-web.name" . }}
-      release: {{ .Release.Name }}
-  replicas: {{ .Values.replicaCount }}
-{{- if .Values.updateStrategy }}
-  strategy:
-{{ toYaml .Values.updateStrategy | indent 4 }}
-{{- end }}
-  minReadySeconds: 5
+      {{- include "tkf-docker-calibre-web.selectorLabels" . | nindent 6 }}
   template:
     metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . nindent 8 }}
+      {{- end }}
       labels:
-        app: {{ template "tkf-docker-calibre-web.name" . }}
-        release: {{ .Release.Name }}
-        {{- if .Values.podLabels }}
-{{ toYaml .Values.podLabels | indent 8 }}
-        {{- end }}
+        {{- include "tkf-docker-calibre-web.selectorLabels" . | nindent 8 }}
     spec:
       {{- if .Values.imagePullSecrets }}
       imagePullSecrets:
-{{ toYaml .Values.imagePullSecrets | indent 8 }}
+        {{- toYaml . | indent 8 }}
       {{- end }}
-{{- if .Values.securityContext.enabled }}
+      serviceAccountName: {{ include "tkf-docker-calibre-web.serviceAccountName" . }}
       securityContext:
-        runAsGroup: {{ .Values.securityContext.runAsGroup }}
-        runAsUser: {{ .Values.securityContext.runAsUser }}
-{{- end }}
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
         - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - containerPort: 8083
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8083
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8083
           resources:
-{{ toYaml .Values.resources | indent 12 }}
+            {{ toYaml .Values.resources | indent 12 }}
           volumeMounts:
             - name: library
               mountPath: /books

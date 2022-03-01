@@ -14,12 +14,41 @@ spec:
     storage: {{ .Values.persistence.size | quote }}
   accessModes:
     - {{ .Values.persistence.accessMode }}
+  {{- if .Values.persistence.nfs.enabled }}
   nfs:
-    path: {{ .Values.nfs.configPath }}
-    server: {{ .Values.nfs.configServer }}
+    path: {{ .Values.persistence.nfs.configPath }}
+    server: {{ .Values.persistence.nfs.configServer }}
+  {{- end }}
   persistentVolumeReclaimPolicy: Retain
   claimRef:
     namespace: default
     name: {{ template "tkf-docker-calibre-web.name" . }}-config
+{{- end }}
+{{- end }}
+{{- if .Values.persistence.enabled }}
+{{- if not .Values.persistence.existingClaim }}
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{ template "tkf-docker-calibre-web.name" . }}-library
+  labels:
+    app: {{ template "tkf-docker-calibre-web.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  capacity:
+    storage: {{ .Values.persistence.size | quote }}
+  accessModes:
+    - {{ .Values.persistence.accessMode }}
+  {{- if .Values.persistence.nfs.enabled }}
+  nfs:
+    path: {{ .Values.persistence.nfs.libraryPath }}
+    server: {{ .Values.persistence.nfs.libraryServer }}
+  {{- end }}
+  persistentVolumeReclaimPolicy: Retain
+  claimRef:
+    namespace: default
+    name: {{ template "tkf-docker-calibre-web.name" . }}-library
 {{- end }}
 {{- end }}
