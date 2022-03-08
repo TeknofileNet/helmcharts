@@ -38,8 +38,8 @@ spec:
     - {{ .Values.persistence.accessMode }}
   {{- if .Values.persistence.nfs.enabled }}
   nfs:
-    path: {{ .Values.persistence.nfs.libraryPath }}
-    server: {{ .Values.persistence.nfs.libraryServer }}
+    path: {{ .Values.persistence.nfs.booksPath }}
+    server: {{ .Values.persistence.nfs.booksServer }}
   {{- end }}
   persistentVolumeReclaimPolicy: Retain
   claimRef:
