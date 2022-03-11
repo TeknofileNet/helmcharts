@@ -46,6 +46,9 @@ spec:
               name: plex-tv
             - mountPath: /movies
               name: plex-movies
+          env:
+            - name: PLEX_CLAIM
+              value: {{ .Values.plex.claim }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
