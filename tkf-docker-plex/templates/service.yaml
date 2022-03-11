@@ -1,0 +1,65 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "tkf-docker-plex.fullname" . }}
+  labels:
+    {{- include "tkf-docker-plex.labels" . | nindent 4 }}
+  annotations:
+    metallb.universe.tf/allow-shared-ip: 'true'
+spec:
+  type: {{ .Values.service.type }}
+  loadBalancerIP: {{ .Values.service.loadBalancerIP }}
+  selector:
+    {{- include "tkf-docker-plex.selectorLabels" . | nindent 4 }}
+  ports:
+    - port: 32400
+      targetPort: 32400
+      protocol: TCP
+      name: plex
+    - port: 8324
+      name: plex-for-roku
+      targetPort: 8324
+      protocol: TCP
+    - port: 32469
+      name: plex-dlna
+      targetPort: 82469
+      protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "tkf-docker-plex.fullname" . }}-udp
+  labels:
+    {{- include "tkf-docker-plex.labels" . | nindent 4 }}
+  annotations:
+    metallb.universe.tf/allow-shared-ip: 'true'
+spec:
+  type: {{ .Values.service.type }}
+  loadBalancerIP: {{ .Values.service.loadBalancerIP }}
+  selector:
+    {{- include "tkf-docker-plex.selectorLabels" . | nindent 4 }}
+  ports:
+    - port: 1900
+      targetPort: 1900
+      protocol: UDP
+      name: plex-dlna
+    - port: 5353
+      name: bonjour-avahi
+      targetPort: 5353
+      protocol: UDP
+    - port: 32410
+      name: gdm1
+      targetPort: 32410
+      protocol: UDP
+    - port: 32412
+      name: gdm2
+      targetPort: 32412
+      protocol: UDP
+    - port: 32413
+      name: gdm3
+      targetPort: 32413
+      protocol: UDP
+    - port: 32414
+      name: gdm4
+      targetPort: 32414
+      protocol: UDP
