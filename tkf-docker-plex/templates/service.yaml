@@ -22,7 +22,7 @@ spec:
       protocol: TCP
     - port: 32469
       name: plex-dlna
-      targetPort: 82469
+      targetPort: 32469
       protocol: TCP
 ---
 apiVersion: v1
