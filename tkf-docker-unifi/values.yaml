@@ -100,4 +100,4 @@ persistence:
   # existingClaim: your-claim
   accessMode: ReadWriteOnce
   size: 10Gi
-  storageClass: "freenas-iscsi-csi"
+  storageClassName: "freenas-iscsi-csi"
