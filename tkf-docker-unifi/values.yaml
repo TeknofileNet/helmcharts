@@ -86,7 +86,7 @@ affinity: {}
 
 persistence:
   enabled: true
-  ## smokeping data Persistent Volume Storage Class
+  ## tkf-docker-unifi data Persistent Volume Storage Class
   ## If defined, storageClassName: <storageClass>
   ## If set to "-", storageClassName: "", which disables dynamic provisioning
   ## If undefined (the default) or set to null, no storageClassName spec is
@@ -100,7 +100,4 @@ persistence:
   # existingClaim: your-claim
   accessMode: ReadWriteOnce
   size: 10Gi
-  nfs:
-    enabled: false
-    configPath: /path/to/nfs/dir
-    configServer: nfsserver.example.org
+  storageClass: "freenas-iscsi-csi"
