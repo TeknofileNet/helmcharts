@@ -57,11 +57,6 @@ persistence:
   size: 10Gi
 
 dnsName: heimdall.cosprings.teknofile.net
-nfs:
-#  configServer: "tkf-nas-02.cosprings.teknofile.net"
-#  configPath: "/mnt/tkfstorage/docker/tkf-heimdall"
-  configServer: "tkf-nas-01.cosprings.teknofile.net"
-  configPath: "/c/heimdall"
 
 service:
   port: 80
