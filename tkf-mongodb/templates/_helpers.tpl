@@ -62,9 +62,5 @@ Create the name of the service account to use
 {{- end }}
 
 {{- define "tkf-mongodb.namespace" -}}
-    {{- if and .Values.global .Values.global.namespaceOverride -}}
-        {{- print .Values.global.namespaceOverride -}}
-    {{- else -}}
-        {{- print .Release.Namespace -}}
-    {{- end }}
+{{- print .Release.Namespace -}}
 {{- end -}}
