@@ -3,9 +3,11 @@ kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: {{ include "tkf-mongodb.fullname" . }}
-  namespace: {{ .Release.Namespace . | quote }}
   labels:
     app.kubernetes.io/component: mongodb
+    chart: {{ .Chart.Name}}-{{ .Chart.Version }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
     {{- include "tkf-mongodb.labels" . | nindent 4 }}
 spec:
   accessModes:
