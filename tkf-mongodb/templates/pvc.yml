@@ -1,0 +1,19 @@
+{{- if and .Values.persistence.enabled (not .Values.persistence.existingClaim) (not (eq .Values.architecture "replicaset")) (not .Values.useStatefulSet) }}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ include "tkf-mongodb.fullname" . }}
+  namespace: {{ include "tkf-mongodb.namespace" . | quote }}
+  labels:
+    app.kubernetes.io/component: mongodb
+    {{- include "tkf-mongodb.labels" . | nindent 4 }}
+spec:
+  accessModes:
+  {{- range .Values.persistence.accessModes }}
+    - {{ . | quote }}
+  {{- end }}
+  resources:
+    requests:
+    storage: {{ .Values.persistence.size | quote }}
+    storageClass: {{ .Values.persistence.storageClass | quote }}
+{{- end }}
