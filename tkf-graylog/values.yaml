@@ -91,3 +91,30 @@ persistence:
   storageClass: ""
   size: 100Gi
   accessModes: ReadWriteOnce
+
+graylog:
+  graylogPasswordSecret: "password"
+  graylogRootPasswordSha2: "hash"
+  graylogIsMaster: "true"
+  graylogNodeIdFile: "/usr/share/graylog/data/config/node-id"
+  graylogRootEmail: "email@example.com"
+  graylogHttpExternalUri: "http://127.0.0.1:9000/"
+  graylogElasticSearchHosts: "http://es-uri.namespace.svc.cluster.local:9200"
+  graylogRotationStrategy: "count"
+  graylogElasticsearchMaxDocsPerIndex: 20000000
+  graylogElasticsearchMaxNumberOfIndices: 20
+  graylogRetentionStrategy: "delete"
+  graylogElasticsearchShards: 4
+  graylogElasticsearchReplicas: 0
+  graylogElasticsearchIndexPrefix: "graylog"
+  graylogTransportEmailEnabled: "true"
+  graylogTransportEmailHostname: "email-smtp.us-west-2.amazonaws.com"
+  graylogTransportEmailPort: "587"
+  graylogTransportEmailUseAuth: true
+  graylogTransportEmailAuthUsername: user
+  graylogTransportEmailAuthPassword: pass
+  graylogTransportEmailSubjectPrefix: graylog
+  graylogTransportEmailFromEmail: "graylog@example.com"
+  graylogTransportEmailUseTls: true
+  graylogTransportEmailWebInterface: "https://graylog.example.com"
+  graylogMongodbUri: "mongodb://mongodb.namespace.svc.cluster.local:27017/graylog"
