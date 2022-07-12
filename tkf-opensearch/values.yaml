@@ -1,9 +1,9 @@
-# Default values for tkf-mongodb.
+# Default values for tkf-opensearch.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
 image:
-  repository: mongo
+  repository: opensearchproject/opensearch
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
@@ -23,8 +23,8 @@ serviceAccount:
 
 podAnnotations: {}
 
-podSecurityContext: {}
-  # fsGroup: 2000
+podSecurityContext: 
+  fsGroup: 1000
 
 securityContext: {}
   # capabilities:
@@ -36,9 +36,21 @@ securityContext: {}
 
 service:
   type: ClusterIP
-  portName: mongodb
   ports:
-    mongodb: 27017
+    elasticsearch: 9200
+    esperf: 9600
+
+containerPorts:
+  elasticsearch: 9200
+  esperf: 9600
+
+persistence:
+  enabled: true
+  existingClaim: ""
+  storageClass: ""
+  accessModes:
+    - ReadWriteOnce
+  size: 8Gi
 
 ingress:
   enabled: false
@@ -56,7 +68,7 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
-resources: {}
+resources:
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -67,15 +79,23 @@ resources: {}
   # requests:
   #   cpu: 100m
   #   memory: 128Mi
+  limits:
+    memory: 3Gi
+  requests:
+    memory: 3Gi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
 
 nodeSelector: {}
 
 tolerations: []
 
 affinity: {}
-
-containerPorts:
-  mongodb: 27017
 
 persistence:
   enabled: true
@@ -84,22 +104,3 @@ persistence:
   accessModes:
     - ReadWriteOnce
   size: 8Gi
-  
-## ServiceAccount
-## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
-##
-serviceAccount:
-  ## @param serviceAccount.create Enable creation of ServiceAccount for MongoDB(&reg;) pods
-  ##
-  create: true
-  ## @param serviceAccount.name Name of the created serviceAccount
-  ## If not set and create is true, a name is generated using the mongodb.fullname template
-  ##
-  name: ""
-  ## @param serviceAccount.annotations Additional Service Account annotations
-  ##
-  annotations: {}
-  ## @param serviceAccount.automountServiceAccountToken Allows auto mount of ServiceAccountToken on the serviceAccount created
-  ## Can be set to false if pods using this serviceAccount do not need to use K8s API
-  ##
-  automountServiceAccountToken: true
