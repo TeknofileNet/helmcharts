@@ -4,12 +4,42 @@ metadata:
   name: {{ include "tkf-graylog.fullname" . }}
   labels:
     {{- include "tkf-graylog.labels" . | nindent 4 }}
+  annotations:
+    metallb.universe.tf/allow-shared-ip: 'true'
 spec:
   type: {{ .Values.service.type }}
+  loadBalancerIP: {{ .Values.service.loadBalancerIP }}
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: http
+    - name: graylog
+      port: 9000
+      targetPort: 9000
       protocol: TCP
-      name: http
+    - name: syslog
+      port: 1514
+      targetPort: 1514
+      protocol: TCP
+    - name: syslog-linux
+      port: 2517
+      targetPort: 2517
+      protocol: TCP
+  selector:
+    {{- include "tkf-graylog.selectorLabels" . | nindent 4 }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "tkf-graylog.fullname" . }}-udp
+  labels:
+    {{- include "tkf-graylog.labels" . | nindent 4 }}
+  annotations:
+    metallb.universe.tf/allow-shared-ip: 'true'
+spec:
+  type: {{ .Values.service.type }}
+  loadBalancerIP: {{ .Values.service.loadBalancerIP }}
+  ports:
+    - name: syslog-udp
+      port: 1514
+      targetPort: 1514
+      protocol: UDP
   selector:
     {{- include "tkf-graylog.selectorLabels" . | nindent 4 }}
