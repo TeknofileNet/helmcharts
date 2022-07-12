@@ -39,6 +39,15 @@ spec:
             - name: syslog
               containerPort: 1514
               protocol: TCP
+            - name: syslog-opnsense
+              containerPort: 2514
+              protocol: TCP
+            - name: syslog-unifi
+              containerPort: 2515
+              protocol: TCP
+            - name: syslog-ids
+              containerPort: 2516
+              protocol: TCP
             - name: syslog-linux
               containerPort: 2517
               protocol: TCP

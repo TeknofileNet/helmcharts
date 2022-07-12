@@ -18,10 +18,23 @@ spec:
       port: 1514
       targetPort: 1514
       protocol: TCP
+    - name: syslog-opnsense
+      port: 2514
+      targetPort: 2514
+      protocol: TCP
+    - name: syslog-unifi
+      port: 2515
+      targetPort: 2515
+      protocol: TCP
+    - name: syslog-ids
+      port: 2516
+      targetPort: 2516
+      protocol: TCP
     - name: syslog-linux
       port: 2517
       targetPort: 2517
       protocol: TCP
+
   selector:
     {{- include "tkf-graylog.selectorLabels" . | nindent 4 }}
 ---
