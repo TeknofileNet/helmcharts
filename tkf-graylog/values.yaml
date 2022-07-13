@@ -118,3 +118,4 @@ graylog:
   graylogTransportEmailUseTls: true
   graylogTransportEmailWebInterface: "https://graylog.example.com"
   graylogMongodbUri: "mongodb://mongodb.namespace.svc.cluster.local:27017/graylog"
+  graylogTimezone: "America/Denver"

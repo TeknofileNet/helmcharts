@@ -45,6 +45,9 @@ spec:
             - name: syslog-unifi
               containerPort: 2515
               protocol: TCP
+            - name: syslog-unifi-udp
+              containerPort: 2515
+              protocol: UDP
             - name: syslog-ids
               containerPort: 2516
               protocol: TCP
@@ -57,6 +60,10 @@ spec:
             - name: graylogdata
               mountPath: /usr/share/graylog/data
           env:
+            - name: TZ
+              value: {{ .Values.graylog.graylogTimezone | quote }}
+            - name: GRAYLOG_TIMEZONE
+              value: {{ .Values.graylog.graylogTimezone | quote }}
             - name: GRAYLOG_PASSWORD_SECRET
               value: {{ .Values.graylog.graylogPasswordSecret | quote }}
             - name: GRAYLOG_ROOT_PASSWORD_SHA2
