@@ -1,14 +1,13 @@
-# Default values for tkf-docker-heimdall.
+# Default values for tkf-radarr.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-replicaCount: 1
-
-updateStrategy: {}
-#  type: RollingUpdate
-#  rollingUpdate:
-#    maxSurge: 1
-#    maxUnavailable: 0
+image:
+  registry: docker.io
+  repository: teknofile/tkf-docker-radarr
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "latest"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -16,50 +15,35 @@ fullnameOverride: ""
 
 serviceAccount:
   # Specifies whether a service account should be created
-  create: false
+  create: true
   # Annotations to add to the service account
   annotations: {}
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
-podLabels: {}
+podSecurityContext: {}
+  # fsGroup: 2000
 
-securityContext: {}
-  # capabilities:
-  #   drop:
-  #   - ALL
-  # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
-  # runAsUser: 1000
-
-image:
-  registry: docker.io
-  repository: teknofile/tkf-docker-radarr
-  pullPolicy: "Always"
-  # Overrides the image tag whose default is the chart appVersion.
-  tag: "latest"
+service:
+  type: ClusterIP
+  port: 7878
 
 ingress:
-  enabled: true
-  className: "nginx"
-  annotations:
+  enabled: false
+  className: ""
+  annotations: {}
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   hosts:
-    - host: radarr.example.net
+    - host: chart-example.local
       paths:
         - path: /
           pathType: ImplementationSpecific
-  tls: 
-    - secretName: certificate-tls
+  tls: []
+  #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local
-
-nameOverride: ""
-fullnameOverride: ""
-
-podAnnotations: {}
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
@@ -73,13 +57,6 @@ resources: {}
   #   cpu: 100m
   #   memory: 128Mi
 
-autoscaling:
-  enabled: false
-  minReplicas: 1
-  maxReplicas: 100
-  targetCPUUtilizationPercentage: 80
-  # targetMemoryUtilizationPercentage: 80
-
 nodeSelector: {}
 
 tolerations: []
@@ -87,18 +64,20 @@ tolerations: []
 affinity: {}
 
 persistence:
-  accessMode: 'ReadWriteOnce'
-  enabled: true
-  size: 10Gi
-  nfs:
-    enabled: false
-    configServer: nfsserver.example.org
-    configPath: /path/to/nfs/dir
-    mediaServer: nfsserver.example.org
-    mediaPath: /path/to/nfs/dir
-    nzbgetServer: nfsserver.example.org
-    nzbgetPath: /path/to/nfs/dir
+  radarrConfig:
+    enabled: true
+    size: 10Gi
+    accessModes: 'ReadWriteOnce'
+    storageClass: ""
+  radarrNzbget:
+    accessModes: ReadWriteMany
+    size: 50Gi
+    storageClass: ""
+  radarrMedia:
+    path: /path/to/movies
+    server: nfs.example.org
 
-service:
-  type: ClusterIP
-  port: 7878
+radarr:
+  TZ: "America/Denver"
+  puid: 1000
+  pgid: 1000
