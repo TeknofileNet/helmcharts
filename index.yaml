@@ -3,7 +3,7 @@ entries:
   tkf-docker-calibre-web:
   - apiVersion: v2
     appVersion: 0.6.14
-    created: "2022-07-15T13:25:28.670110859-06:00"
+    created: "2022-07-15T15:45:16.054449356-06:00"
     description: A Helm chart for Kubernetes
     digest: 677fd657033225c98c6e4d591e194224e06b5a43c9f907b9acabc2fa1982f375
     name: tkf-docker-calibre-web
@@ -13,7 +13,7 @@ entries:
     version: 0.1.4
   - apiVersion: v2
     appVersion: 0.6.14
-    created: "2022-07-15T13:25:28.669641655-06:00"
+    created: "2022-07-15T15:45:16.053938203-06:00"
     description: A Helm chart for Kubernetes
     digest: cbd41d8991cedd623e59bc13ce741874d98fe9fd14183975982a56151043a54e
     name: tkf-docker-calibre-web
@@ -23,7 +23,7 @@ entries:
     version: 0.1.2
   - apiVersion: v2
     appVersion: 0.6.14
-    created: "2022-07-15T13:25:28.66918169-06:00"
+    created: "2022-07-15T15:45:16.053417523-06:00"
     description: A Helm chart for Kubernetes
     digest: ba485b1ab65334d672e8a2409a809ad696cae67e3c03cb978a2183c077124960
     name: tkf-docker-calibre-web
@@ -33,7 +33,7 @@ entries:
     version: 0.1.1
   - apiVersion: v2
     appVersion: 0.6.14
-    created: "2022-07-15T13:25:28.668621856-06:00"
+    created: "2022-07-15T15:45:16.052877016-06:00"
     description: A Helm chart for Kubernetes
     digest: 58bf49f52248123c78128b22677c5b9c38b310ede665b63976349bdef2040838
     name: tkf-docker-calibre-web
@@ -44,7 +44,7 @@ entries:
   tkf-docker-heimdall:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2022-07-15T13:25:28.671317079-06:00"
+    created: "2022-07-15T15:45:16.055753861-06:00"
     description: A Helm chart for Kubernetes
     digest: fb8c0e993fd87db0f3de76fac4eac897e423763633850e80b07fc00a9db44125
     name: tkf-docker-heimdall
@@ -54,7 +54,7 @@ entries:
     version: 0.1.3
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2022-07-15T13:25:28.670921925-06:00"
+    created: "2022-07-15T15:45:16.055326667-06:00"
     description: A Helm chart for Kubernetes
     digest: fd5e76745c5dffc9dc4cdfeb17c14843227823a4298be0288ca74fdd17367ad8
     name: tkf-docker-heimdall
@@ -64,7 +64,7 @@ entries:
     version: 0.1.2
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2022-07-15T13:25:28.670498548-06:00"
+    created: "2022-07-15T15:45:16.054877752-06:00"
     description: A Helm chart for Kubernetes
     digest: 974e9990f5ea48f127301b13b5d15fe7dadf6f00de7ec16ecf1aae9a6a1751a4
     name: tkf-docker-heimdall
@@ -75,7 +75,7 @@ entries:
   tkf-docker-lum:
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2022-07-15T13:25:28.67166816-06:00"
+    created: "2022-07-15T15:45:16.057124181-06:00"
     description: LDAP User Manager
     digest: 1c96100dcf42dcb64c8a08a189ca793c475d3fef50829957f2f7e79cd528ef07
     name: tkf-docker-lum
@@ -86,7 +86,7 @@ entries:
   tkf-docker-mariadb:
   - apiVersion: v2
     appVersion: 10.5.13
-    created: "2022-07-15T13:25:28.673624793-06:00"
+    created: "2022-07-15T15:45:16.058438245-06:00"
     description: A helm chart for deploying a mariadb instance on kubernetes
     digest: 3d4f25474822ca782c0e371a377f7cc297b757278afad68318ddbdabb7b5a04d
     name: tkf-docker-mariadb
@@ -97,7 +97,7 @@ entries:
   tkf-docker-nextcloud:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2022-07-15T13:25:28.677359261-06:00"
+    created: "2022-07-15T15:45:16.06197374-06:00"
     description: A Helm chart for Kubernetes
     digest: 613916b88190896eb2a8b19d39c7012eb09743cac1403a2c73b835dd3d5c993e
     name: tkf-docker-nextcloud
@@ -107,7 +107,7 @@ entries:
     version: 0.1.2
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2022-07-15T13:25:28.676144415-06:00"
+    created: "2022-07-15T15:45:16.060803747-06:00"
     description: A Helm chart for Kubernetes
     digest: c5332c96a8dc26fa3394dd37e1b280a6e345b8e34591e952a9a94e9e4bad3b82
     name: tkf-docker-nextcloud
@@ -117,7 +117,7 @@ entries:
     version: 0.1.1
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2022-07-15T13:25:28.674893009-06:00"
+    created: "2022-07-15T15:45:16.059653402-06:00"
     description: A Helm chart for Kubernetes
     digest: 2fb4b88d7ea061909cd4cb142290283366995616f9e89e3371e172d771bec2a7
     name: tkf-docker-nextcloud
@@ -128,7 +128,7 @@ entries:
   tkf-docker-piwigo:
   - apiVersion: v2
     appVersion: 12.1.0
-    created: "2022-07-15T13:25:28.678568908-06:00"
+    created: "2022-07-15T15:45:16.063126931-06:00"
     description: Piwigo - linuxserver
     digest: e7187977dceae64a52a2b12324166d13f7e9efcfbb1758113b4dcd6a8e169ae6
     name: tkf-docker-piwigo
@@ -139,7 +139,7 @@ entries:
   tkf-docker-plex:
   - apiVersion: v2
     appVersion: 1.25.7.5604-980a13e02
-    created: "2022-07-15T13:25:28.683284504-06:00"
+    created: "2022-07-15T15:45:16.067949749-06:00"
     description: A Helm chart for plex based off the linuxserver.io work
     digest: 0b5e15302247de54e77aaf1af729b8bea02dbcfacef0c897cd1f590c2ecab0a4
     name: tkf-docker-plex
@@ -149,7 +149,7 @@ entries:
     version: 0.1.3
   - apiVersion: v2
     appVersion: 1.25.7.5604-980a13e02
-    created: "2022-07-15T13:25:28.682129019-06:00"
+    created: "2022-07-15T15:45:16.066746745-06:00"
     description: A Helm chart for plex based off the linuxserver.io work
     digest: bfde5a46e19f8c90add4899e631d568f435fb99951bb2fff76038bac344fca94
     name: tkf-docker-plex
@@ -159,7 +159,7 @@ entries:
     version: 0.1.2
   - apiVersion: v2
     appVersion: 1.25.7.5604-980a13e02
-    created: "2022-07-15T13:25:28.680930223-06:00"
+    created: "2022-07-15T15:45:16.065536246-06:00"
     description: A Helm chart for plex based off the linuxserver.io work
     digest: 752efd65a90fdf759186f3f0fb8aca539c9e5f768ce26e1d528e7c9c4031ea4a
     name: tkf-docker-plex
@@ -169,7 +169,7 @@ entries:
     version: 0.1.1
   - apiVersion: v2
     appVersion: 1.25.7.5604-980a13e02
-    created: "2022-07-15T13:25:28.679771732-06:00"
+    created: "2022-07-15T15:45:16.064326589-06:00"
     description: A Helm chart for plex based off the linuxserver.io work
     digest: 934dda61587ccb84232dffd153da0729183eb4254b2e338845143f2c94a90fe2
     name: tkf-docker-plex
@@ -180,7 +180,7 @@ entries:
   tkf-docker-registry:
   - apiVersion: v2
     appVersion: 2.7.1
-    created: "2022-07-15T13:25:28.687500499-06:00"
+    created: "2022-07-15T15:45:16.072304026-06:00"
     description: This chart deploys a docker registry
     digest: 7f3d10075917f8a00f01a20773bf42ee52083bbfb5b0c7b4b9661a9c5324f7df
     name: tkf-docker-registry
@@ -190,7 +190,7 @@ entries:
     version: 0.1.19
   - apiVersion: v2
     appVersion: 2.7.1
-    created: "2022-07-15T13:25:28.686646252-06:00"
+    created: "2022-07-15T15:45:16.071427396-06:00"
     description: This chart deploys a docker registry
     digest: 07e2c96fa13072bcc65fb1c37335e655f3bb1f7cde1e6cc6a53e54f3417254f2
     name: tkf-docker-registry
@@ -200,7 +200,7 @@ entries:
     version: 0.1.18
   - apiVersion: v2
     appVersion: 2.7.1
-    created: "2022-07-15T13:25:28.685792625-06:00"
+    created: "2022-07-15T15:45:16.070557368-06:00"
     description: This chart deploys a docker registry
     digest: 51089e99e8188e26d314927fe33f0a578fd7ce2e8388687e37db3e92920600c2
     name: tkf-docker-registry
@@ -210,7 +210,7 @@ entries:
     version: 0.1.17
   - apiVersion: v2
     appVersion: 2.7.1
-    created: "2022-07-15T13:25:28.684956471-06:00"
+    created: "2022-07-15T15:45:16.069698892-06:00"
     description: This chart deploys a docker registry
     digest: 77d6caa4628d04bff08481fadea011f8b9c1574f87ffcfa3c95725d23df62d8d
     name: tkf-docker-registry
@@ -220,7 +220,7 @@ entries:
     version: 0.1.16
   - apiVersion: v2
     appVersion: 2.7.1
-    created: "2022-07-15T13:25:28.684114817-06:00"
+    created: "2022-07-15T15:45:16.068822773-06:00"
     description: This chart deploys a docker registry
     digest: 60d91d546a29942ae96a1758a0b86254600d2ff46f1fdb7a570cdfd4a928ce18
     name: tkf-docker-registry
@@ -231,7 +231,7 @@ entries:
   tkf-docker-smokeping:
   - apiVersion: v2
     appVersion: 2.7.3
-    created: "2022-07-15T13:25:28.689561789-06:00"
+    created: "2022-07-15T15:45:16.07502087-06:00"
     description: A Helm chart for Kubernetes
     digest: 2142cea7306ae48855b0698fc7b32da223d25048cccf9c1704047e8d7b14c3d9
     name: tkf-docker-smokeping
@@ -242,7 +242,7 @@ entries:
   tkf-docker-sonarr:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2022-07-15T13:25:28.691418795-06:00"
+    created: "2022-07-15T15:45:16.077956146-06:00"
     description: A helm chart for sonarr
     digest: 217a3c4b559b56678bc8ede8bcef7fb3f1300645422e20ae117db573790a8194
     name: tkf-docker-sonarr
@@ -252,7 +252,7 @@ entries:
     version: 0.1.1
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2022-07-15T13:25:28.69049209-06:00"
+    created: "2022-07-15T15:45:16.076525713-06:00"
     description: A helm chart for radarr
     digest: 4829dc50a9eddcc17782f6049ae8b354d26d1181e312b5fd21e7c4aa826748c2
     name: tkf-docker-sonarr
@@ -263,7 +263,7 @@ entries:
   tkf-docker-unifi:
   - apiVersion: v2
     appVersion: 6.5.55-16678-1
-    created: "2022-07-15T13:25:28.700405329-06:00"
+    created: "2022-07-15T15:45:16.087577418-06:00"
     description: This helm chart deploys a container for running the unifi controller
       software
     digest: 0672f6315b89d09986622df38e57e19a9705cc2cbaf65791889d8b117a476cd9
@@ -274,7 +274,7 @@ entries:
     version: 0.1.7
   - apiVersion: v2
     appVersion: 6.5.55-16678-1
-    created: "2022-07-15T13:25:28.699317241-06:00"
+    created: "2022-07-15T15:45:16.086480152-06:00"
     description: This helm chart deploys a container for running the unifi controller
       software
     digest: f65c94c7a8107ce0b3700a6d45bf954ca78f35037ec006ab401119ee20b9b86e
@@ -285,7 +285,7 @@ entries:
     version: 0.1.6
   - apiVersion: v2
     appVersion: 6.5.55-16678-1
-    created: "2022-07-15T13:25:28.698255132-06:00"
+    created: "2022-07-15T15:45:16.085374351-06:00"
     description: This helm chart deploys a container for running the unifi controller
       software
     digest: cee663207327a54e1686e70e151ae32b0b641f768d20228e09b56df484dced72
@@ -296,7 +296,7 @@ entries:
     version: 0.1.5
   - apiVersion: v2
     appVersion: 6.5.55-16678-1
-    created: "2022-07-15T13:25:28.697123663-06:00"
+    created: "2022-07-15T15:45:16.084176646-06:00"
     description: This helm chart deploys a container for running the unifi controller
       software
     digest: 5290295354c234c3d71d23783026bafc83d3058eddf36f0a370db87de5abacea
@@ -307,7 +307,7 @@ entries:
     version: 0.1.4
   - apiVersion: v2
     appVersion: 6.5.55-16678-1
-    created: "2022-07-15T13:25:28.695989778-06:00"
+    created: "2022-07-15T15:45:16.083034837-06:00"
     description: This helm chart deploys a container for running the unifi controller
       software
     digest: 765db3ba39b6ae5f71b2b90921e537966e96257b3e25a220ccd15b40d5ab9446
@@ -318,7 +318,7 @@ entries:
     version: 0.1.3
   - apiVersion: v2
     appVersion: 6.5.55-16678-1
-    created: "2022-07-15T13:25:28.694849382-06:00"
+    created: "2022-07-15T15:45:16.081872569-06:00"
     description: This helm chart deploys a container for running the unifi controller
       software
     digest: 34571ec0a38ea2ccfae96de07a2ba3f6a1edf5a98d7ca36629e4a15004fb7e5c
@@ -329,7 +329,7 @@ entries:
     version: 0.1.2
   - apiVersion: v2
     appVersion: 6.5.55-16678-1
-    created: "2022-07-15T13:25:28.693743801-06:00"
+    created: "2022-07-15T15:45:16.080683651-06:00"
     description: This helm chart deploys a container for running the unifi controller
       software
     digest: 3f895105500642062d87cb02fa0017f5d015a6eb76e6ca5dbe2c110581b2fe1b
@@ -340,7 +340,7 @@ entries:
     version: 0.1.1
   - apiVersion: v2
     appVersion: 6.5.55-16678-1
-    created: "2022-07-15T13:25:28.692602683-06:00"
+    created: "2022-07-15T15:45:16.079486667-06:00"
     description: This helm chart deploys a container for running the unifi controller
       software
     digest: cfc89f3e672cf39c4d76834bb924f2c10af5e6df6f637871d107888cc8609ad6
@@ -352,7 +352,7 @@ entries:
   tkf-ghost:
   - apiVersion: v2
     appVersion: 4.34.3
-    created: "2022-07-15T13:25:28.702361631-06:00"
+    created: "2022-07-15T15:45:16.08960257-06:00"
     description: A Helm chart for Kubernetes
     digest: f05334ad5b2d61b569b097e22096b4fdb91ed4d0f6370586142c7b89c57ffb79
     name: tkf-ghost
@@ -362,7 +362,7 @@ entries:
     version: 0.1.1
   - apiVersion: v2
     appVersion: 4.34.3
-    created: "2022-07-15T13:25:28.701398228-06:00"
+    created: "2022-07-15T15:45:16.088579995-06:00"
     description: A Helm chart for Kubernetes
     digest: 193c4b5a6d01bd9fa070c51a3e34accef9f9124fde96d53eb641a77a2c463528
     name: tkf-ghost
@@ -373,7 +373,17 @@ entries:
   tkf-graylog:
   - apiVersion: v2
     appVersion: "4.3"
-    created: "2022-07-15T13:25:28.706862262-06:00"
+    created: "2022-07-15T15:45:16.095581956-06:00"
+    description: A simple graylog chart
+    digest: fd6d2e52371890874286e123b37b8c50c7b066e2483e057a7a1cdacfa0b2d52c
+    name: tkf-graylog
+    type: application
+    urls:
+    - tkf-graylog-0.1.5.tgz
+    version: 0.1.5
+  - apiVersion: v2
+    appVersion: "4.3"
+    created: "2022-07-15T15:45:16.094929257-06:00"
     description: A simple graylog chart
     digest: 8259e85dba504d7deb5f5369d2268b017a50a7844a762c16543d4c91432aeb19
     name: tkf-graylog
@@ -383,7 +393,7 @@ entries:
     version: 0.1.4
   - apiVersion: v2
     appVersion: "4.3"
-    created: "2022-07-15T13:25:28.706302699-06:00"
+    created: "2022-07-15T15:45:16.094293901-06:00"
     description: A simple graylog chart
     digest: 2405398122dd517557c6d19b0e6f500731bc3559a321ef16b249c7cc6c6dc3af
     name: tkf-graylog
@@ -393,7 +403,7 @@ entries:
     version: 0.1.3
   - apiVersion: v2
     appVersion: "4.3"
-    created: "2022-07-15T13:25:28.70578763-06:00"
+    created: "2022-07-15T15:45:16.093615935-06:00"
     description: A simple graylog chart
     digest: 1dbac40f7331d8c0f4c26f70789054ecb6a74f30c365a6263f141b253a75c2b3
     name: tkf-graylog
@@ -403,7 +413,7 @@ entries:
     version: 0.1.2
   - apiVersion: v2
     appVersion: "4.3"
-    created: "2022-07-15T13:25:28.70526177-06:00"
+    created: "2022-07-15T15:45:16.092898044-06:00"
     description: A Helm chart for Kubernetes
     digest: d187c1ffb549863320dc1b8e8050a1f3236a6bcbe06319c2199a438213d230cf
     name: tkf-graylog
@@ -413,7 +423,7 @@ entries:
     version: 0.1.1
   - apiVersion: v2
     appVersion: "4.3"
-    created: "2022-07-15T13:25:28.703618747-06:00"
+    created: "2022-07-15T15:45:16.090911715-06:00"
     description: A Helm chart for Kubernetes
     digest: aaca00b1ba3e12b78b077201715f34368e03a857e96d7c43804001f14b2f8bbf
     name: tkf-graylog
@@ -424,7 +434,7 @@ entries:
   tkf-mongodb:
   - apiVersion: v2
     appVersion: "4.4"
-    created: "2022-07-15T13:25:28.708840185-06:00"
+    created: "2022-07-15T15:45:16.097954332-06:00"
     description: A Helm chart for Kubernetes
     digest: 2d59bca4688a62988682656e0f56feb9af6efcb258a53b2e0c70fd14ffaba350
     name: tkf-mongodb
@@ -434,7 +444,7 @@ entries:
     version: 0.1.13
   - apiVersion: v2
     appVersion: "4.4"
-    created: "2022-07-15T13:25:28.708435524-06:00"
+    created: "2022-07-15T15:45:16.097518772-06:00"
     description: A Helm chart for Kubernetes
     digest: b62e2c8e69bed57b04a173677903d0d19166ea3f5c90c2c3696a8664dfa4fdaf
     name: tkf-mongodb
@@ -444,7 +454,7 @@ entries:
     version: 0.1.11
   - apiVersion: v2
     appVersion: "4.4"
-    created: "2022-07-15T13:25:28.708027355-06:00"
+    created: "2022-07-15T15:45:16.09706095-06:00"
     description: A Helm chart for Kubernetes
     digest: 93b00277903f198e1891ed8f7cd2f0af547869f1a5c41c0c370d8d351049aca0
     name: tkf-mongodb
@@ -454,7 +464,7 @@ entries:
     version: 0.1.10
   - apiVersion: v2
     appVersion: "4.4"
-    created: "2022-07-15T13:25:28.713891563-06:00"
+    created: "2022-07-15T15:45:16.101784742-06:00"
     description: A Helm chart for Kubernetes
     digest: 4417d70b2c3a1a9b7c73226648656968fc778e4bb241f5efc952f25d0e8d115d
     name: tkf-mongodb
@@ -464,7 +474,7 @@ entries:
     version: 0.1.9
   - apiVersion: v2
     appVersion: "4.4"
-    created: "2022-07-15T13:25:28.712924743-06:00"
+    created: "2022-07-15T15:45:16.101384659-06:00"
     description: A Helm chart for Kubernetes
     digest: 234f1e31d90085a5afdd8f4780195815599aa763bc2df7d8bfe2635ba444dca9
     name: tkf-mongodb
@@ -474,7 +484,7 @@ entries:
     version: 0.1.8
   - apiVersion: v2
     appVersion: "4.4"
-    created: "2022-07-15T13:25:28.71122804-06:00"
+    created: "2022-07-15T15:45:16.100942998-06:00"
     description: A Helm chart for Kubernetes
     digest: f8c2270b136596d494f3d3e3551231531f8795aa62ba79662332838b8bc479a2
     name: tkf-mongodb
@@ -484,7 +494,7 @@ entries:
     version: 0.1.7
   - apiVersion: v2
     appVersion: "4.4"
-    created: "2022-07-15T13:25:28.710820974-06:00"
+    created: "2022-07-15T15:45:16.100297292-06:00"
     description: A Helm chart for Kubernetes
     digest: 174fc3f37ff5fa4d44b92949e3fd0e41f78469304eca54497b177bdd0daed552
     name: tkf-mongodb
@@ -494,7 +504,7 @@ entries:
     version: 0.1.6
   - apiVersion: v2
     appVersion: "4.4"
-    created: "2022-07-15T13:25:28.710446318-06:00"
+    created: "2022-07-15T15:45:16.099519869-06:00"
     description: A Helm chart for Kubernetes
     digest: a308eb8f35f43b8742e6cb2a9c1b5cfce6aac808ad556d430bd3fa64f45deae4
     name: tkf-mongodb
@@ -504,7 +514,7 @@ entries:
     version: 0.1.5
   - apiVersion: v2
     appVersion: "4.4"
-    created: "2022-07-15T13:25:28.710058849-06:00"
+    created: "2022-07-15T15:45:16.099136066-06:00"
     description: A Helm chart for Kubernetes
     digest: a4ed7a7295da034a7bbe0ed1f6a0d3b98e8f38ab3e2a2c2534ac2a839981bb67
     name: tkf-mongodb
@@ -514,7 +524,7 @@ entries:
     version: 0.1.4
   - apiVersion: v2
     appVersion: "4.4"
-    created: "2022-07-15T13:25:28.709644088-06:00"
+    created: "2022-07-15T15:45:16.098751933-06:00"
     description: A Helm chart for Kubernetes
     digest: c4faff27bdde14e1a6fdc580be34276ea1fd0e869b7dbc47876b3d1832f226b1
     name: tkf-mongodb
@@ -524,7 +534,7 @@ entries:
     version: 0.1.3
   - apiVersion: v2
     appVersion: "4.4"
-    created: "2022-07-15T13:25:28.709232684-06:00"
+    created: "2022-07-15T15:45:16.098347953-06:00"
     description: A Helm chart for Kubernetes
     digest: daa8be3c15a1abc40c1b768efcbbdccc8b13834b71c0daabbe3b71bde0dd35f7
     name: tkf-mongodb
@@ -534,7 +544,7 @@ entries:
     version: 0.1.2
   - apiVersion: v2
     appVersion: "4.4"
-    created: "2022-07-15T13:25:28.707647641-06:00"
+    created: "2022-07-15T15:45:16.096490276-06:00"
     description: A Helm chart for Kubernetes
     digest: a780b230e18f88ab59d5b7bf549e06fffcc6301f25cdf5293e8448fe4fd411c6
     name: tkf-mongodb
@@ -544,7 +554,7 @@ entries:
     version: 0.1.1
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2022-07-15T13:25:28.707253549-06:00"
+    created: "2022-07-15T15:45:16.096043114-06:00"
     description: A Helm chart for Kubernetes
     digest: b643a4dde336add066aafb524b0756f3268070c4b07d0993a4c9bbf8335eafc1
     name: tkf-mongodb
@@ -555,7 +565,7 @@ entries:
   tkf-nzbget:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2022-07-15T13:25:28.716702504-06:00"
+    created: "2022-07-15T15:45:16.102950016-06:00"
     description: A Helm chart for my nzbget container from linuxserver.io.
     digest: 7b9bfa3b8e5369d1a8b066898a73cc637cfc7f2e083547e56a7765c4d84e1828
     name: tkf-nzbget
@@ -566,7 +576,7 @@ entries:
   tkf-radarr:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2022-07-15T13:25:28.71750283-06:00"
+    created: "2022-07-15T15:45:16.103473571-06:00"
     description: A Helm chart for Kubernetes
     digest: 5b7257b91dcf2a3fb0b58e7014d6515bff4ff97380007334fee51fed409a4c24
     name: tkf-radarr
@@ -577,7 +587,7 @@ entries:
   tkf-sonarr:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2022-07-15T13:25:28.718126043-06:00"
+    created: "2022-07-15T15:45:16.10390862-06:00"
     description: A Helm chart for Kubernetes
     digest: b898d105ffe0b8b5690848c6c9b7a20d00e147b7358e14a45382b00b87aa1f98
     name: tkf-sonarr
@@ -585,4 +595,4 @@ entries:
     urls:
     - tkf-sonarr-0.1.0.tgz
     version: 0.1.0
-generated: "2022-07-15T13:25:28.668059297-06:00"
+generated: "2022-07-15T15:45:16.05228434-06:00"
