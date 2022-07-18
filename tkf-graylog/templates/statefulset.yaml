@@ -54,6 +54,9 @@ spec:
             - name: syslog-linux
               containerPort: 2517
               protocol: TCP
+            - name: gelf-tcp
+              containerPort: 12201
+              protocol: TCP
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:

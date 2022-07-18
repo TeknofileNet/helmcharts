@@ -50,6 +50,10 @@ spec:
       port: 2517
       targetPort: 2517
       protocol: TCP
+    - name: gelf-tcp
+      port: 12201
+      targetPort: 12201
+      protocol: TCP
 
   selector:
     {{- include "tkf-graylog.selectorLabels" . | nindent 4 }}
