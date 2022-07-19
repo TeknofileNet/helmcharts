@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: privatebin/nginx-fpm-alpine
+  repository: lscr.io/linuxserver/smokeping
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: "latest"
@@ -38,7 +38,7 @@ securityContext: {}
 
 service:
   type: ClusterIP
-  port: 8080
+  port: 80
 
 ingress:
   enabled: false
@@ -82,7 +82,18 @@ tolerations: []
 affinity: {}
 
 persistence:
-  enabled: true
-  size: 7Gi
-  storageClass: ""
-  accessModes: "ReadWriteOnce"
+  config:
+    enabled: true
+    size: 1Gi
+    storageClass: ""
+    accessModes: "ReadWriteOnce"
+  data:
+    enabled: true
+    size: 1Gi
+    storageClass: ""
+    accessModes: "ReadWriteOnce"
+
+smokeping:
+  tz: "America/Dnever"
+  puid: 1000
+  pgid: 1000

@@ -1,16 +1,15 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
-  name: {{ include "tkf-smokeping.fullname" . }}
+  name: {{ include "smokeping.fullname" . }}
   labels:
-    {{- include "tkf-smokeping.labels" . | nindent 4 }}
+    {{- include "smokeping.labels" . | nindent 4 }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
-  replicas: {{ .Values.replicaCount }}
-  {{- end }}
+  replicas: 1
+  serviceName: {{ include "smokeping.fullname" . }}
   selector:
     matchLabels:
-      {{- include "tkf-smokeping.selectorLabels" . | nindent 6 }}
+      {{- include "smokeping.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -18,13 +17,13 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "tkf-smokeping.selectorLabels" . | nindent 8 }}
+        {{- include "smokeping.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "tkf-smokeping.serviceAccountName" . }}
+      serviceAccountName: {{ include "smokeping.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
@@ -47,6 +46,18 @@ spec:
               port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          env:
+            - name: TZ
+              value: "{{ .Values.smokeping.TZ }}"
+            - name: PUID
+              value: "{{ .Values.smokeping.puid }}"
+            - name: PGID
+              value: "{{ .Values.smokeping.pgid }}"
+          volumeMounts:
+            - name: config
+              mountPath: /config
+            - name: data
+              mountPath: /data
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -59,3 +70,22 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+  volumeClaimTemplates:
+    - metadata:
+        name: config
+      spec:
+        accessModes:
+          - {{ .Values.persistence.config.accessModes }}
+        storageClassName: {{ .Values.persistence.config.storageClass | quote }}
+        resources:
+          requests:
+            storage: {{ .Values.persistence.config.size | quote }}
+    - metadata:
+        name: data
+      spec:
+        accessModes:
+          - {{ .Values.persistence.data.accessModes }}
+        storageClassName: {{ .Values.persistence.data.storageClass | quote }}
+        resources:
+          requests:
+            storage: {{ .Values.persistence.data.size | quote }}

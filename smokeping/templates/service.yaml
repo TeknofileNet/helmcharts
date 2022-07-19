@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "tkf-smokeping.fullname" . }}
+  name: {{ include "smokeping.fullname" . }}
   labels:
-    {{- include "tkf-smokeping.labels" . | nindent 4 }}
+    {{- include "smokeping.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
   ports:
@@ -12,4 +12,4 @@ spec:
       protocol: TCP
       name: http
   selector:
-    {{- include "tkf-smokeping.selectorLabels" . | nindent 4 }}
+    {{- include "smokeping.selectorLabels" . | nindent 4 }}
