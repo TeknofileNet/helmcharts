@@ -1,4 +1,4 @@
-# Default values for tkf-readarr.
+# Default values for tkf-codeserver.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
@@ -76,7 +76,7 @@ persistence:
   accessModes: 'ReadWriteOnce'
   storageClass: ""
 
-readarr:
+codeserver:
   TZ: "America/Denver"
   puid: 1000
   pgid: 1000

@@ -8,7 +8,7 @@ image:
   repository: privatebin/nginx-fpm-alpine
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: "latest"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -84,4 +84,5 @@ affinity: {}
 persistence:
   enabled: true
   size: 7Gi
-  storageClass: "freenas-iscsi-csi"
+  storageClass: ""
+  accessModes: "ReadWriteOnce"
