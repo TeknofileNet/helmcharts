@@ -1,0 +1,80 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "tkf-codeserver.fullname" . }}
+  labels:
+    {{- include "tkf-codeserver.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  serviceName: {{ include "tkf-codeserver.fullname" . }}
+  selector:
+    matchLabels:
+      {{- include "tkf-codeserver.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "tkf-codeserver.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "tkf-codeserver.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: https
+              containerPort: 8443
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8443
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8443
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          env:
+            - name: TZ
+              value: "{{ .Values.codeserver.TZ }}"
+            - name: PUID
+              value: "{{ .Values.codeserver.puid }}"
+            - name: PGID
+              value: "{{ .Values.codeserver.pgid }}"
+          volumeMounts:
+            - name: coderserverconf
+              moutnPath: /config
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+  volumeClaimTemplates:
+    - metadata:
+        name: coderserverconf
+      spec:
+        accessModes:
+          - {{ .Values.persistence.accessModes }}
+        storageClassName: {{ .Values.persistence.storageClass | quote }}
+        resources:
+          requests:
+            storage: {{ .Values.persistence.size | quote }}
