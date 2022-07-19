@@ -1,15 +1,15 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: {{ include "smokeping.fullname" . }}
+  name: {{ include "calibre-web.fullname" . }}
   labels:
-    {{- include "smokeping.labels" . | nindent 4 }}
+    {{- include "calibre-web.labels" . | nindent 4 }}
 spec:
   replicas: 1
-  serviceName: {{ include "smokeping.fullname" . }}
+  serviceName: {{ include "calibre-web.fullname" . }}
   selector:
     matchLabels:
-      {{- include "smokeping.selectorLabels" . | nindent 6 }}
+      {{- include "calibre-web.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -17,13 +17,13 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "smokeping.selectorLabels" . | nindent 8 }}
+        {{- include "calibre-web.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "smokeping.serviceAccountName" . }}
+      serviceAccountName: {{ include "calibre-web.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
@@ -34,30 +34,28 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: 80
+              containerPort: 8083
               protocol: TCP
-#          livenessProbe:
-#            httpGet:
-#              path: /
-#              port: http
-#          readinessProbe:
-#            httpGet:
-#              path: /
-#              port: http
+          livenessProbe:
+            tcpSocket:
+              port: 8083
+          readinessProbe:
+            tcpSocket:
+              port: 8083
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
             - name: TZ
-              value: "{{ .Values.smokeping.TZ }}"
+              value: "{{ .Values.calibreWeb.TZ }}"
             - name: PUID
-              value: "{{ .Values.smokeping.puid }}"
+              value: "{{ .Values.calibreWeb.puid }}"
             - name: PGID
-              value: "{{ .Values.smokeping.pgid }}"
+              value: "{{ .Values.calibreWeb.pgid }}"
           volumeMounts:
-            - name: config
+            - name: calibreConfig
               mountPath: /config
-            - name: data
-              mountPath: /data
+            - name: calibreMedia
+              mountPath: /books
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -70,22 +68,18 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      volumes:
+        - name: calibreMedia
+          nfs:
+            server: {{ .Values.persistence.calibreMedia.server | quote }}
+            path: {{ .Values.persistence.calibreMedia.path | quote }}
   volumeClaimTemplates:
     - metadata:
-        name: config
+        name: calibreConfig
       spec:
         accessModes:
-          - {{ .Values.persistence.config.accessModes }}
-        storageClassName: {{ .Values.persistence.config.storageClass | quote }}
+          - {{ .Values.persistence.calibreConfig.accessModes }}
+        storageClassName: {{ .Values.persistence.calibreConfig.storageClass | quote }}
         resources:
           requests:
-            storage: {{ .Values.persistence.config.size | quote }}
-    - metadata:
-        name: data
-      spec:
-        accessModes:
-          - {{ .Values.persistence.data.accessModes }}
-        storageClassName: {{ .Values.persistence.data.storageClass | quote }}
-        resources:
-          requests:
-            storage: {{ .Values.persistence.data.size | quote }}
+            storage: {{ .Values.persistence.calibreConfig.size | quote }}
