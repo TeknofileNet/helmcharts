@@ -36,12 +36,6 @@ spec:
             - name: http
               containerPort: 8083
               protocol: TCP
-          livenessProbe:
-            tcpSocket:
-              port: 8083
-          readinessProbe:
-            tcpSocket:
-              port: 8083
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
@@ -52,9 +46,9 @@ spec:
             - name: PGID
               value: "{{ .Values.calibreWeb.pgid }}"
           volumeMounts:
-            - name: calibreConfig
+            - name: calibreconfig
               mountPath: /config
-            - name: calibreMedia
+            - name: calibremedia
               mountPath: /books
       {{- with .Values.nodeSelector }}
       nodeSelector:
@@ -69,13 +63,13 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       volumes:
-        - name: calibreMedia
+        - name: calibremedia
           nfs:
             server: {{ .Values.persistence.calibreMedia.server | quote }}
             path: {{ .Values.persistence.calibreMedia.path | quote }}
   volumeClaimTemplates:
     - metadata:
-        name: calibreConfig
+        name: calibreconfig
       spec:
         accessModes:
           - {{ .Values.persistence.calibreConfig.accessModes }}
