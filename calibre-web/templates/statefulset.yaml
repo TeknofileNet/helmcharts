@@ -39,6 +39,8 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
+            - name: DOCKER_MODS
+              value: "linuxserver/mods:universal-calibre"
             - name: TZ
               value: "{{ .Values.calibreWeb.TZ }}"
             - name: PUID
