@@ -50,7 +50,7 @@ spec:
       port: 2517
       targetPort: 2517
       protocol: TCP
-    - name: syslog-unifi
+    - name: syslog-pihole
       port: 2518
       targetPort: 2518
       protocol: TCP
