@@ -50,11 +50,14 @@ spec:
       port: 2517
       targetPort: 2517
       protocol: TCP
+    - name: syslog-unifi
+      port: 2518
+      targetPort: 2518
+      protocol: TCP
     - name: gelf-tcp
       port: 12201
       targetPort: 12201
       protocol: TCP
-
   selector:
     {{- include "tkf-graylog.selectorLabels" . | nindent 4 }}
 ---
@@ -77,6 +80,10 @@ spec:
     - name: syslog-unifi-udp
       port: 2515
       targetPort: 2515
+      protocol: UDP
+    - name: syslog-pihole-udp
+      port: 2518
+      targetPort: 2518
       protocol: UDP
   selector:
     {{- include "tkf-graylog.selectorLabels" . | nindent 4 }}

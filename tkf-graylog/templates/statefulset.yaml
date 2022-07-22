@@ -54,6 +54,12 @@ spec:
             - name: syslog-linux
               containerPort: 2517
               protocol: TCP
+            - name: syslog-pihole
+              containerPort: 2518
+              protocol: TCP
+            - name: syslog-pihole-udp
+              containerPort: 2518
+              protocol: UDP
             - name: gelf-tcp
               containerPort: 12201
               protocol: TCP
