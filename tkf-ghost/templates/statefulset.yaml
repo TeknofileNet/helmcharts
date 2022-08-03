@@ -78,5 +78,5 @@ spec:
           - {{ .Values.persistence.accessModes }}
         storageClassName: {{ .Values.persistence.storageClass | quote }}
         resources:
-          reuqests:
+          requests:
             storage: {{ .Values.persistence.size | quote }}
