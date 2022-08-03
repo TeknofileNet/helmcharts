@@ -38,7 +38,7 @@ securityContext: {}
 
 service:
   type: ClusterIP
-  port: 80
+  port: 2368
 
 ingress:
   enabled: false
@@ -80,3 +80,8 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+persistence:
+  accessModes: 'ReadWriteOnce'
+  storageClass: {}
+  storage: 10Gi

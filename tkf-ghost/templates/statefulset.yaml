@@ -1,13 +1,12 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ include "tkf-ghost.fullname" . }}
   labels:
     {{- include "tkf-ghost.labels" . | nindent 4 }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
-  replicas: {{ .Values.replicaCount }}
-  {{- end }}
+  replicas: 1
+  serviceName: {{ include "tkf-ghost.fullname" . }}
   selector:
     matchLabels:
       {{- include "tkf-ghost.selectorLabels" . | nindent 6 }}
@@ -37,11 +36,20 @@ spec:
             - name: http
               containerPort: 2368
               protocol: TCP
+          livenessProbe:
+            tcpSocket:
+              port: 2368
+          readinessProbe:
+            tcpSocket:
+              port: 2368
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
-            - name: ghost-config
+            - name: ghost
               mountPath: /var/lib/ghost/content
+          env:
+            - name: URL
+              value: "https://www.teknofile.org/"
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -62,3 +70,13 @@ spec:
           {{- else }}
           emptyDir: {}
           {{- end }}
+  volumeClaimTemplates:
+    - metadata:
+        name: ghost
+      spec:
+        accessModes:
+          - {{ .Values.persistence.accessModes }}
+        storageClassName: {{ .Values.persistence.storageClass | quote }}
+        resources:
+          reuqests:
+            storage: {{ .Values.persistence.size | quote }}
