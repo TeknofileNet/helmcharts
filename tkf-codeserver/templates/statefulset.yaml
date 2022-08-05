@@ -51,6 +51,12 @@ spec:
               value: "{{ .Values.codeserver.puid }}"
             - name: PGID
               value: "{{ .Values.codeserver.pgid }}"
+            - name: PASSWORD
+              value: "{{ .Values.codeserver.password }}"
+            - name: HASHED_PASSWORD
+              value: "{{ .Values.codeserver.hashed_password }}"
+            - name: SUDO_PASSWORD
+              value: "{{ .Values.codeserver.sudo_password }}"
           volumeMounts:
             - name: coderserverconf
               mountPath: /config

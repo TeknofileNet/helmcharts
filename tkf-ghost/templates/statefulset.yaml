@@ -49,9 +49,11 @@ spec:
               mountPath: /var/lib/ghost/content
           env:
             - name: url
-              value: "https://www.teknofile.org/"
+              value: {{ .Values.ghost.url | quote }}
             - name: database__client
-              value: sqlite3
+              value: {{ .Values.ghost.databasetype | quote }}
+            - name: admin__url:
+              value: {{ .Values.ghost.admin_url | quote }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

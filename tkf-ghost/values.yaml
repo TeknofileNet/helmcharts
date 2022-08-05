@@ -85,3 +85,8 @@ persistence:
   accessModes: 'ReadWriteOnce'
   storageClass: {}
   storage: 10Gi
+
+ghost:
+  url: "http://example.com/"
+  databasetype: "sqlite3"
+  admin_url: "http://foo.bar.com/"
