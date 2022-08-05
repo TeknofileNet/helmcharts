@@ -93,3 +93,5 @@ codeserver:
   #
   sudo_password: changeme!
   sudo_password_hash: $type$salt@hashed
+
+  docker_mods: ""

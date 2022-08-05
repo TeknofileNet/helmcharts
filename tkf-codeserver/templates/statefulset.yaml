@@ -57,6 +57,10 @@ spec:
               value: "{{ .Values.codeserver.hashed_password }}"
             - name: SUDO_PASSWORD
               value: "{{ .Values.codeserver.sudo_password }}"
+            - name: SUDO_PASSWORD_HASH
+              value: "{{ .Values.codeserver.sudo_password_hash }}"
+            - name: DOCKER_MODS
+              value: "{{ .Values.codeserver.docker_mods }}"
           volumeMounts:
             - name: coderserverconf
               mountPath: /config
