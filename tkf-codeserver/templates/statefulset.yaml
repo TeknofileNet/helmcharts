@@ -47,12 +47,8 @@ spec:
               value: "{{ .Values.codeserver.pgid }}"
             - name: PASSWORD
               value: "{{ .Values.codeserver.password }}"
-            - name: HASHED_PASSWORD
-              value: "{{ .Values.codeserver.hashed_password }}"
             - name: SUDO_PASSWORD
               value: "{{ .Values.codeserver.sudo_password }}"
-            - name: SUDO_PASSWORD_HASH
-              value: "{{ .Values.codeserver.sudo_password_hash }}"
             - name: DOCKER_MODS
               value: "{{ .Values.codeserver.docker_mods }}"
           volumeMounts:

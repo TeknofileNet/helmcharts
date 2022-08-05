@@ -85,13 +85,8 @@ codeserver:
   # If PASSWORD or HASHED_PASWORD is not provided, there will be no auth
   password: changeme!
 
-  # hashed_password:
-  # Overrides password, see: https://github.com/cdr/code-server/blob/master/docs/FAQ.md#can-i-store-my-password-hashed
-  hashed_password: $argon2i$myhashedpw
-
   # If this optional variable is set, user will have sudo access in the code-server terminal with the specified password.
   #
   sudo_password: changeme!
-  sudo_password_hash: $type$salt@hashed
 
   docker_mods: ""
