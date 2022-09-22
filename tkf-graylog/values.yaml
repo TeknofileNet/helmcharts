@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: graylog/graylog-enterprise
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: "4.3"
 
