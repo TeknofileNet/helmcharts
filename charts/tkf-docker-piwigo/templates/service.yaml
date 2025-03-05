@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "tkf-docker-piwigo.fullname" . }}
+  labels:
+    {{- include "tkf-docker-piwigo.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "tkf-docker-piwigo.selectorLabels" . | nindent 4 }}

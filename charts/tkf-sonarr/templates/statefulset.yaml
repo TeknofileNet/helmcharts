@@ -1,0 +1,98 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "tkf-sonarr.fullname" . }}
+  labels:
+    {{- include "tkf-sonarr.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  serviceName: {{ include "tkf-sonarr.fullname" . }}
+  selector:
+    matchLabels:
+      {{- include "tkf-sonarr.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "tkf-sonarr.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "tkf-sonarr.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: sonarr
+              containerPort: 8989
+              protocol: TCP
+          livenessProbe:
+            tcpSocket:
+              port: 8989
+            initialDelaySeconds: 60
+            periodSeconds: 5
+          readinessProbe:
+            tcpSocket:
+              port: 8989
+            initialDelaySeconds: 90
+            periodSeconds: 5
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - name: sonarrconfig
+              mountPath: /config
+            - name: sonarrmedia
+              mountPath: /tv
+            - name: sonarrnzbget
+              mountPath: /downloads
+          env:
+            - name: TZ
+              value: "{{ .Values.sonarr.TZ }}"
+            - name: PUID
+              value: "{{ .Values.sonarr.puid }}"
+            - name: PGID
+              value: "{{ .Values.sonarr.pgid }}"
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+        - name: sonarrmedia
+          nfs:
+            server: {{ .Values.persistence.sonarrMedia.server | quote }}
+            path: {{ .Values.persistence.sonarrMedia.path | quote }}
+        - name: sonarrnzbget
+          {{- if .Values.persistence.sonarrNzbget.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ .Values.persistence.sonarrNzbget.existingClaim | default (include "tkf-sonarr.name" . ) }}
+          {{- else }}
+          emptyDir: {}
+          {{- end }}
+  volumeClaimTemplates:
+    - metadata:
+        name: sonarrconfig
+      spec:
+        accessModes:
+          - {{ .Values.persistence.sonarrConfig.accessModes }}
+        storageClassName: {{ .Values.persistence.sonarrConfig.storageClass | quote }}
+        resources:
+          requests:
+            storage: {{ .Values.persistence.sonarrConfig.size | quote }}

@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{ template "tkf-docker-calibre-web.name" . }}-config
+  labels:
+    app: {{ template "tkf-docker-calibre-web.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  capacity:
+    storage: {{ .Values.persistence.size | quote }}
+  accessModes:
+    - {{ .Values.persistence.accessMode }}
+  {{- if .Values.persistence.nfs.enabled }}
+  nfs:
+    path: {{ .Values.persistence.nfs.configPath }}
+    server: {{ .Values.persistence.nfs.configServer }}
+  {{- end }}
+  persistentVolumeReclaimPolicy: Retain
+  claimRef:
+    namespace: default
+    name: {{ template "tkf-docker-calibre-web.name" . }}-config
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{ template "tkf-docker-calibre-web.name" . }}-library
+  labels:
+    app: {{ template "tkf-docker-calibre-web.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  capacity:
+    storage: {{ .Values.persistence.size | quote }}
+  accessModes:
+    - {{ .Values.persistence.accessMode }}
+  {{- if .Values.persistence.nfs.enabled }}
+  nfs:
+    path: {{ .Values.persistence.nfs.booksPath }}
+    server: {{ .Values.persistence.nfs.booksServer }}
+  {{- end }}
+  persistentVolumeReclaimPolicy: Retain
+  claimRef:
+    namespace: default
+    name: {{ template "tkf-docker-calibre-web.name" . }}-library

@@ -1,0 +1,147 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "tkf-graylog.fullname" . }}
+  labels:
+    {{- include "tkf-graylog.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "tkf-graylog.selectorLabels" . | nindent 6 }}
+  replicas: 1
+  serviceName: {{ include "tkf-graylog.fullname" . }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "tkf-graylog.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "tkf-graylog.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: graylog
+              containerPort: 9000
+              protocol: TCP
+            - name: syslog
+              containerPort: 1514
+              protocol: TCP
+            - name: syslog-opnsense
+              containerPort: 2514
+              protocol: TCP
+            - name: syslog-unifi
+              containerPort: 2515
+              protocol: TCP
+            - name: unifi-udp
+              containerPort: 2515
+              protocol: UDP
+            - name: syslog-ids
+              containerPort: 2516
+              protocol: TCP
+            - name: syslog-linux
+              containerPort: 2517
+              protocol: TCP
+            - name: syslog-pihole
+              containerPort: 2518
+              protocol: TCP
+            - name: pihole-udp
+              containerPort: 2518
+              protocol: UDP
+            - name: gelf-tcp
+              containerPort: 12201
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - name: graylogdata
+              mountPath: /usr/share/graylog/data
+          env:
+            - name: TZ
+              value: {{ .Values.graylog.graylogTimezone | quote }}
+            - name: GRAYLOG_TIMEZONE
+              value: {{ .Values.graylog.graylogTimezone | quote }}
+            - name: GRAYLOG_PASSWORD_SECRET
+              value: {{ .Values.graylog.graylogPasswordSecret | quote }}
+            - name: GRAYLOG_ROOT_PASSWORD_SHA2
+              value: {{ .Values.graylog.graylogRootPasswordSha2  | quote }}
+            - name: GRAYLOG_IS_MASTER
+              value: {{ .Values.graylog.graylogIsMaster  | quote }}
+            - name: GRAYLOG_NODE_ID_FILE
+              value: {{ .Values.graylog.graylogNodeIdFile  | quote }}
+            - name: GRAYLOG_ROOT_EMAIL
+              value: {{ .Values.graylog.graylogRootEmail  | quote }}
+            - name: GRAYLOG_HTTP_EXTERNAL_URI
+              value: {{ .Values.graylog.graylogHttpExternalUri  | quote }}
+            - name: GRAYLOG_ELASTICSEARCH_HOSTS
+              value: {{ .Values.graylog.graylogElasticSearchHosts  | quote }}
+            - name: GRAYLOG_ROTATION_STRATEGY
+              value: {{ .Values.graylog.graylogRotationStrategy  | quote }}
+#            - name: GRAYLOG_ELASTICSEARCH_MAX_DOCS_PER_INDEX
+#              value: {{ .Values.graylog.graylogElasticsearchMaxDocsPerIndex }}
+#            - name: GRAYLOG_ELASTICSEARCH_MAX_NUMBER_OF_INDICES
+#              value: {{ .Values.graylog.graylogElasticsearchMaxNumberOfIndices }}
+            - name: GRAYLOG_RETENTION_STRATEGY
+              value: {{ .Values.graylog.graylogRetentionStrategy  | quote }}
+#            - name: GRAYLOG_ELASTICSEARCH_SHARDS
+#              value: {{ .Values.graylog.graylogElasticsearchShards }}
+#            - name: GRAYLOG_ELASTICSEARCH_REPLICAS
+#              value: {{ .Values.graylog.graylogElasticsearchReplicas }}
+            - name: GRAYLOG_ELASTICSEARCH_INDEX_PREFIX
+              value: {{ .Values.graylog.graylogElasticsearchIndexPrefix  | quote }}
+            - name: GRAYLOG_TRANSPORT_EMAIL_ENABLED
+              value: {{ .Values.graylog.graylogTransportEmailEnabled  | quote }}
+            - name: GRAYLOG_TRANSPORT_EMAIL_HOSTNAME
+              value: {{ .Values.graylog.graylogTransportEmailHostname  | quote }}
+            - name: GRAYLOG_TRANSPORT_EMAIL_PORT
+              value: {{ .Values.graylog.graylogTransportEmailPort  | quote }}
+            - name: GRAYLOG_TRANSPORT_EMAIL_USE_AUTH
+              value: {{ .Values.graylog.graylogTransportEmailUseAuth  | quote }}
+            - name: GRAYLOG_TRANSPORT_EMAIL_AUTH_USERNAME
+              value: {{ .Values.graylog.graylogTransportEmailAuthUsername  | quote }}
+            - name: GRAYLOG_TRANSPORT_EMAIL_AUTH_PASSWORD
+              value: {{ .Values.graylog.graylogTransportEmailAuthPassword  | quote }}
+            - name: GRAYLOG_TRANSPORT_EMAIL_SUBJECT_PREFIX
+              value: {{ .Values.graylog.graylogTransportEmailSubjectPrefix  | quote }}
+            - name: GRAYLOG_TRANSPORT_EMAIL_FROM_EMAIL
+              value: {{ .Values.graylog.graylogTransportEmailFromEmail  | quote }}
+            - name: GRAYLOG_TRANSPORT_EMAIL_USE_TLS
+              value: {{ .Values.graylog.graylogTransportEmailUseTls  | quote }}
+            - name: GRAYLOG_TRANSPORT_EMAIL_WEB_INTERFACE
+              value: {{ .Values.graylog.graylogTransportEmailWebInterface  | quote }}
+            - name: GRAYLOG_MONGODB_URI
+              value: {{ .Values.graylog.graylogMongodbUri  | quote }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+  volumeClaimTemplates:
+    - metadata:
+        name: graylogdata
+      spec:
+        accessModes:
+          - {{ .Values.persistence.accessModes }}
+        storageClassName: {{ .Values.persistence.storageClass | quote }}
+        resources:
+          requests:
+            storage: {{ .Values.persistence.size | quote }}

@@ -1,0 +1,89 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "tkf-graylog.fullname" . }}-web
+  labels:
+    {{- include "tkf-graylog.labels" . | nindent 4 }}
+spec:
+  type: ClusterIP
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: 9000
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "tkf-graylog.selectorLabels" . | nindent 4 }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "tkf-graylog.fullname" . }}
+  labels:
+    {{- include "tkf-graylog.labels" . | nindent 4 }}
+  annotations:
+    metallb.universe.tf/allow-shared-ip: 'true'
+spec:
+  type: {{ .Values.service.type }}
+  loadBalancerIP: {{ .Values.service.loadBalancerIP }}
+  ports:
+    - name: graylog
+      port: 9000
+      targetPort: 9000
+      protocol: TCP
+    - name: syslog
+      port: 1514
+      targetPort: 1514
+      protocol: TCP
+    - name: syslog-opnsense
+      port: 2514
+      targetPort: 2514
+      protocol: TCP
+    - name: syslog-unifi
+      port: 2515
+      targetPort: 2515
+      protocol: TCP
+    - name: syslog-ids
+      port: 2516
+      targetPort: 2516
+      protocol: TCP
+    - name: syslog-linux
+      port: 2517
+      targetPort: 2517
+      protocol: TCP
+    - name: syslog-pihole
+      port: 2518
+      targetPort: 2518
+      protocol: TCP
+    - name: gelf-tcp
+      port: 12201
+      targetPort: 12201
+      protocol: TCP
+  selector:
+    {{- include "tkf-graylog.selectorLabels" . | nindent 4 }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "tkf-graylog.fullname" . }}-udp
+  labels:
+    {{- include "tkf-graylog.labels" . | nindent 4 }}
+  annotations:
+    metallb.universe.tf/allow-shared-ip: 'true'
+spec:
+  type: {{ .Values.service.type }}
+  loadBalancerIP: {{ .Values.service.loadBalancerIP }}
+  ports:
+    - name: syslog-udp
+      port: 1514
+      targetPort: 1514
+      protocol: UDP
+    - name: syslog-unifi-udp
+      port: 2515
+      targetPort: 2515
+      protocol: UDP
+    - name: syslog-pihole-udp
+      port: 2518
+      targetPort: 2518
+      protocol: UDP
+  selector:
+    {{- include "tkf-graylog.selectorLabels" . | nindent 4 }}
