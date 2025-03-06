@@ -158,6 +158,19 @@ entries:
     version: 0.1.0
   tkf-docker-heimdall:
   - apiVersion: v2
+    appVersion: v2.6.3-ls302
+    created: "2025-03-06T23:12:25.248627641Z"
+    description: Heimdall is a way to organise all those links to your most used web
+      sites and web applications in a simple way. Simplicity is the key to Heimdall.
+      Why not use it as your browser start page? It even has the ability to include
+      a search bar using either Google, Bing or DuckDuckGo.
+    digest: f3cec9e554e18c057d1ccf95c9dbb528e902e0bbbe6e73a39573c56f258ebd30
+    name: tkf-docker-heimdall
+    type: application
+    urls:
+    - tkf-docker-heimdall-1.0.0.tgz
+    version: 1.0.0
+  - apiVersion: v2
     appVersion: 1.16.0
     created: "2022-09-22T11:02:44.898697436-06:00"
     description: A Helm chart for Kubernetes
@@ -815,4 +828,4 @@ entries:
     urls:
     - tkf-sonarr-0.1.0.tgz
     version: 0.1.0
-generated: "2025-03-06T22:49:47.911697418Z"
+generated: "2025-03-06T23:12:25.248774656Z"
