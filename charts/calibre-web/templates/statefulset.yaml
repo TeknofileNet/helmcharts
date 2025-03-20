@@ -78,8 +78,8 @@ spec:
         name: calibremedia
       spec:
         accessModes:
-          - {{ .Values.persistence.calibremedia.accessModes }}
-        storageClassName: {{ .Values.persistence.calibremedia.storageClass | quote }}
+          - {{ .Values.persistence.calibreMedia.accessModes }}
+        storageClassName: {{ .Values.persistence.calibreMedia.storageClass | quote }}
         resources:
           requests:
-            storage: {{ .Values.persistence.calibremedia.size | quote }}
+            storage: {{ .Values.persistence.calibreMedia.size | quote }}
