@@ -8,7 +8,7 @@ image:
   repository: lscr.io/linuxserver/calibre-web
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "latest"
+  tag: "0.6.24-ls319"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -81,7 +81,6 @@ tolerations: []
 
 affinity: {}
 
-
 persistence:
   calibreConfig:
     enabled: true
@@ -89,8 +88,10 @@ persistence:
     accessModes: 'ReadWriteOnce'
     storageClass: ""
   calibreMedia:
-    path: /path/to/books
-    server: nfs.example.org
+    enabled: true
+    size: 60Gi
+    accessModes: 'ReadWriteOnce'
+    storageClass: ""
 
 calibreWeb:
   TZ: "America/Denver"
