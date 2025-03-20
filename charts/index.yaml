@@ -1,0 +1,17 @@
+apiVersion: v1
+entries:
+  calibre-web:
+  - apiVersion: v2
+    appVersion: 0.6.24-ls319
+    created: "2025-03-19T19:02:47.879799876-06:00"
+    description: Calibre-web is a web app providing a clean interface for browsing,
+      reading and downloading eBooks using an existing Calibre database. It is also
+      possible to integrate google drive and edit metadata and your calibre library
+      through the app itself.
+    digest: 88cb0d92ff85f4d53733f1ff925707bb7da83e0a4850b59eb02e97b5c31c7976
+    name: calibre-web
+    type: application
+    urls:
+    - calibre-web-0.1.3.tgz
+    version: 0.1.3
+generated: "2025-03-19T19:02:47.879279444-06:00"
